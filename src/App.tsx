@@ -55,7 +55,7 @@ export function buildBookingMessage(draft: EventDraft): string {
   const cleanLocation = draft.location.trim() ? draft.location.trim() : 'уточняется';
 
   return [
-    'Здравствуйте! Хочу забронировать вечер в Евгеника Club:',
+    'Здравствуйте! Хочу забронировать вечер в Evgenika Club:',
     `• Формат: ${draft.format}`,
     `• Повод: ${draft.occasion}`,
     `• Количество гостей: ${cleanGuests}`,
@@ -110,7 +110,7 @@ export default function App() {
   );
 }
 
-// --- Image with Robust Fallback ---
+// --- Image with Robust Fallback (Zero Broken Images) ---
 function SafeImage({ src, alt, className, title }: { src: string; alt: string; className?: string; title: string }) {
   const [hasError, setHasError] = useState(false);
 
@@ -119,7 +119,7 @@ function SafeImage({ src, alt, className, title }: { src: string; alt: string; c
       <div className={`w-full h-full bg-[#FAF6F0] border border-[#6B1D2F]/20 flex flex-col items-center justify-center p-6 text-center ${className || ''}`}>
         <Wine className="w-10 h-10 text-[#6B1D2F] mb-2 opacity-80" />
         <span className="font-serif text-sm font-semibold text-[#1E1B18]">{title}</span>
-        <span className="text-xs text-[#1E1B18]/60 mt-1">Евгеника Club</span>
+        <span className="text-xs text-[#1E1B18]/60 mt-1">Evgenika Club</span>
       </div>
     );
   }
@@ -163,22 +163,22 @@ function StickyHeader({
   return (
     <header className="sticky top-0 z-45 bg-[#FAF6F0]/95 backdrop-blur-md border-b border-[#6B1D2F]/10 px-4 sm:px-8 py-3.5 transition-all">
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
-        {/* Logo & Subtitle with Two-Wine-Glass Emblem */}
+        {/* Logo & Subtitle with Properly Framed Two-Wine-Glass Emblem */}
         <button
           onClick={() => onNavigate('#/')}
           className="flex items-center gap-3 text-left group focus:outline-none"
         >
-          <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden border border-[#B8925A]/40 shrink-0 shadow-sm bg-white flex items-center justify-center">
+          <div className="w-11 h-11 rounded-full overflow-hidden border border-[#B8925A]/40 shrink-0 bg-white p-0.5 flex items-center justify-center shadow-sm">
             <SafeImage
               src={LOGO_GLASSES_SRC}
-              alt="Евгеника Club Логотип"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-              title="Евгеника Club"
+              alt="Evgenika Club Logo"
+              className="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform"
+              title="Evgenika Club"
             />
           </div>
           <div>
             <span className="font-serif text-lg sm:text-xl font-bold tracking-tight text-[#6B1D2F] group-hover:opacity-90 transition-opacity block leading-tight">
-              Евгеника Club
+              Evgenika Club
             </span>
             <span className="block text-[10px] sm:text-[11px] tracking-wider uppercase text-[#B8925A] font-medium leading-none mt-0.5">
               Винные игры и дегустации
@@ -315,7 +315,7 @@ function HomePage({
 }) {
   return (
     <div className="flex flex-col gap-20 pb-24">
-      {/* 1. Hero Section */}
+      {/* 1. Hero Section with Real Candid Photograph */}
       <section className="relative px-4 sm:px-8 pt-12 sm:pt-20 max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         <div className="lg:col-span-7 flex flex-col gap-6">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#B8925A]/10 text-[#B8925A] text-xs font-semibold tracking-wide w-fit">
@@ -363,9 +363,9 @@ function HomePage({
           <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-[#6B1D2F]/15 bg-white aspect-[4/3] group">
             <SafeImage
               src="/src/assets/images/hero_candid_wine_gathering_1795613860686.jpg"
-              alt="Теплая дружеская встреча с вином в Евгеника Club"
+              alt="Теплая дружеская встреча с вином в Evgenika Club"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-              title="Евгеника Club — Атмосфера вечера"
+              title="Evgenika Club — Атмосфера вечера"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-6 pointer-events-none">
               <span className="text-[#FAF6F0] text-sm font-medium tracking-wide">
@@ -668,7 +668,7 @@ function CalculatorWidget({ onOpenProposal }: { onOpenProposal: (draft: EventDra
           <span className="text-xs uppercase tracking-wider font-bold text-[#6B1D2F]">Готовый текст заявки</span>
           <button
             onClick={() => onOpenProposal(draft)}
-            className="px-4 py-2 rounded-xl bg-[#6B1D2F]/10 text-[#6B1D2F] text-xs font-bold hover:bg-[#6B1D2F]/20 transition-all flex items-center gap-1.5"
+            className="px-4 py-2 rounded-xl bg-[#6B1D2F]/10 text-[#6B1D2F] text-xs font-bold hover:bg-[#6B1D2F]/25 transition-all flex items-center gap-1.5"
           >
             <FileText className="w-3.5 h-3.5" />
             <span>Открыть коммерческое предложение (КП)</span>
@@ -733,16 +733,16 @@ function ProposalModal({ draft, onClose }: { draft: EventDraft; onClose: () => v
         {/* Proposal Header */}
         <div className="flex flex-col sm:flex-row items-center sm:items-start justify-between gap-6 border-b border-[#6B1D2F]/20 pb-6 text-center sm:text-left">
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-[#B8925A] shrink-0 bg-white shadow-sm flex items-center justify-center">
+            <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-[#B8925A] shrink-0 bg-white p-0.5 shadow-sm flex items-center justify-center">
               <SafeImage
                 src={LOGO_GLASSES_SRC}
-                alt="Евгеника Club"
-                className="w-full h-full object-cover"
-                title="Евгеника Club"
+                alt="Evgenika Club"
+                className="w-full h-full object-cover rounded-full"
+                title="Evgenika Club"
               />
             </div>
             <div>
-              <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#6B1D2F]">Евгеника Club</h2>
+              <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#6B1D2F]">Evgenika Club</h2>
               <span className="text-xs uppercase tracking-widest text-[#B8925A] font-semibold">Коммерческое предложение</span>
             </div>
           </div>
@@ -1138,16 +1138,16 @@ function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
           <div className="md:col-span-6 flex flex-col gap-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full overflow-hidden border border-[#B8925A]/40 shrink-0 bg-white flex items-center justify-center">
+              <div className="w-11 h-11 rounded-full overflow-hidden border border-[#B8925A]/40 shrink-0 bg-white p-0.5 flex items-center justify-center">
                 <SafeImage
                   src={LOGO_GLASSES_SRC}
-                  alt="Евгеника Club"
-                  className="w-full h-full object-cover"
-                  title="Евгеника Club"
+                  alt="Evgenika Club"
+                  className="w-full h-full object-cover rounded-full"
+                  title="Evgenika Club"
                 />
               </div>
               <span className="font-serif text-2xl font-bold tracking-tight text-white">
-                Евгеника Club
+                Evgenika Club
               </span>
             </div>
             <p className="text-sm text-[#FAF6F0]/70 max-w-md leading-relaxed">
@@ -1172,7 +1172,7 @@ function Footer() {
         </div>
 
         <div className="border-t border-white/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#FAF6F0]/60">
-          <p>© {new Date().getFullYear()} Евгеника Club. Все права защищены.</p>
+          <p>© {new Date().getFullYear()} Evgenika Club. Все права защищены.</p>
           <p className="text-center sm:text-right max-w-xl">
             18+. Мероприятия предназначены для совершеннолетних. Мы не осуществляем дистанционную продажу алкоголя — оказываются исключительно услуги проведения дегустаций и винных игр.
           </p>
