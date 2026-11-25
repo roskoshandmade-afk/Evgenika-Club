@@ -3,10 +3,13 @@
 @layer base {
   :root {
     --bg-ivory: #FAF6F0;
+    --bg-parchment: #F3ECE1;
+    --bg-sand: #E9DFD0;
     --burgundy-primary: #6B1D2F;
     --burgundy-dark: #4A1220;
+    --merlot-espresso: #221418;
     --gold-accent: #B8925A;
-    --gold-light: #D4AF37;
+    --gold-light: #D4B07A;
     --charcoal-text: #1E1B18;
   }
   
@@ -21,7 +24,7 @@
   }
 }
 
-/* Custom smooth scroll and boutique styling */
+/* Custom smooth scroll and boutique selection styling */
 ::selection {
   background-color: #6B1D2F;
   color: #FAF6F0;

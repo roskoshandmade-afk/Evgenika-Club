@@ -29,9 +29,16 @@ import {
 const CONTACT_TELEGRAM = 'https://t.me/eugenica_club';
 const CONTACT_MAX = 'https://max.ru/eugenica_club';
 
-// --- Logo & Asset Constants ---
+// --- Asset Constants (Natural Candid Slavic/Russian Everyday Moments) ---
 const LOGO_GLASSES_SRC = '/src/assets/images/logo_two_wine_glasses_1795615021848.jpg';
-const HERO_IMAGE_SRC = '/src/assets/images/hero_candid_wine_gathering_1795613860686.jpg';
+const HERO_IMAGE_SRC = '/src/assets/images/hero_candid_slavic_gathering_1795618221935.jpg';
+
+const CARD_WINE_CASINO_SRC = '/src/assets/images/card_slavic_casino_1795618217600.jpg';
+const CARD_WINE_QUIZ_SRC = '/src/assets/images/card_slavic_quiz_1795618217244.jpg';
+const CARD_BLIND_TASTING_SRC = '/src/assets/images/candid_blind_tasting_1795613860333.jpg';
+const CARD_WINE_MAFIA_SRC = '/src/assets/images/card_slavic_mafia_1795618221220.jpg';
+const CARD_SABRAGEMENT_SRC = '/src/assets/images/card_slavic_sabragement_1795618218141.jpg';
+const CARD_SOMMELIER_BUFFET_SRC = '/src/assets/images/card_slavic_sommelier_1795618224355.jpg';
 
 // --- Booking Message Types & Builder ---
 type EventDraft = {
@@ -111,13 +118,13 @@ export default function App() {
   );
 }
 
-// --- Image with Burgundy/Gold Card Fallback (Zero Broken Images) ---
+// --- Image with Soft Parchment Fallback (Zero Broken Images, Zero Pure White) ---
 function SafeImage({ src, alt, className, title }: { src: string; alt: string; className?: string; title: string }) {
   const [hasError, setHasError] = useState(false);
 
   if (hasError) {
     return (
-      <div className={`w-full h-full bg-[#FAF6F0] border-2 border-[#6B1D2F]/30 flex flex-col items-center justify-center p-6 text-center ${className || ''}`}>
+      <div className={`w-full h-full bg-[#F3ECE1] border-2 border-[#6B1D2F]/30 flex flex-col items-center justify-center p-6 text-center ${className || ''}`}>
         <div className="w-12 h-12 rounded-full bg-[#6B1D2F]/10 flex items-center justify-center mb-3">
           <Wine className="w-6 h-6 text-[#6B1D2F]" />
         </div>
@@ -164,14 +171,14 @@ function StickyHeader({
   };
 
   return (
-    <header className="sticky top-0 z-45 bg-[#FAF6F0]/95 backdrop-blur-md border-b border-[#6B1D2F]/10 px-4 sm:px-8 py-3.5 transition-all">
+    <header className="sticky top-0 z-45 bg-[#FAF6F0]/95 backdrop-blur-md border-b border-[#6B1D2F]/15 px-4 sm:px-8 py-3.5 transition-all">
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
         {/* Logo & Subtitle with Properly Framed Two-Wine-Glass Emblem */}
         <button
           onClick={() => onNavigate('#/')}
           className="flex items-center gap-3 text-left group focus:outline-none"
         >
-          <div className="w-11 h-11 rounded-full overflow-hidden border border-[#B8925A]/40 shrink-0 bg-white p-0.5 flex items-center justify-center shadow-sm">
+          <div className="w-11 h-11 rounded-full overflow-hidden border border-[#B8925A]/40 shrink-0 bg-[#F3ECE1] p-0.5 flex items-center justify-center shadow-sm">
             <SafeImage
               src={LOGO_GLASSES_SRC}
               alt="Evgenika Club Logo"
@@ -230,7 +237,7 @@ function StickyHeader({
         <div className="hidden sm:flex items-center gap-3">
           <button
             onClick={onOpenProposal}
-            className="px-4 py-2.5 rounded-full border border-[#6B1D2F]/30 text-[#6B1D2F] text-xs sm:text-sm font-semibold hover:bg-[#6B1D2F]/5 transition-all flex items-center gap-1.5 whitespace-nowrap"
+            className="px-4 py-2.5 rounded-full border border-[#6B1D2F]/30 text-[#6B1D2F] text-xs sm:text-sm font-semibold hover:bg-[#6B1D2F]/8 transition-all flex items-center gap-1.5 whitespace-nowrap bg-[#F3ECE1]"
           >
             <FileText className="w-4 h-4" />
             <span>Коммерческое КП</span>
@@ -255,7 +262,7 @@ function StickyHeader({
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 w-full bg-[#FAF6F0] border-b border-[#6B1D2F]/10 px-6 py-6 shadow-lg flex flex-col gap-4 animate-fadeIn">
+        <div className="md:hidden absolute top-full left-0 w-full bg-[#FAF6F0] border-b border-[#6B1D2F]/15 px-6 py-6 shadow-lg flex flex-col gap-4 animate-fadeIn">
           <button
             onClick={() => {
               setMobileMenuOpen(false);
@@ -291,7 +298,7 @@ function StickyHeader({
               setMobileMenuOpen(false);
               onOpenProposal();
             }}
-            className="w-full py-3 rounded-full border border-[#6B1D2F]/30 text-[#6B1D2F] text-sm font-semibold text-center flex items-center justify-center gap-2"
+            className="w-full py-3 rounded-full border border-[#6B1D2F]/30 text-[#6B1D2F] text-sm font-semibold text-center flex items-center justify-center gap-2 bg-[#F3ECE1]"
           >
             <FileText className="w-4 h-4" />
             <span>Коммерческое предложение (КП)</span>
@@ -318,11 +325,11 @@ function HomePage({
 }) {
   return (
     <div className="flex flex-col gap-20 pb-24">
-      {/* 1. Hero Section with Bundled Hero Photograph */}
+      {/* 1. Hero Section */}
       <section className="relative px-4 sm:px-8 pt-12 sm:pt-20 max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         <div className="lg:col-span-7 flex flex-col gap-6">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#B8925A]/10 text-[#B8925A] text-xs font-semibold tracking-wide w-fit">
-            <Sparkles className="w-3.5 h-3.5" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#B8925A]/15 text-[#6B1D2F] text-xs font-semibold tracking-wide w-fit border border-[#B8925A]/30">
+            <Sparkles className="w-3.5 h-3.5 text-[#B8925A]" />
             <span>Премиальный выездной винный клуб</span>
           </div>
           <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#1E1B18] leading-[1.15]">
@@ -341,12 +348,12 @@ function HomePage({
             </a>
             <button
               onClick={() => onNavigate('#/formats')}
-              className="px-7 py-3.5 rounded-full border border-[#6B1D2F]/30 text-[#6B1D2F] text-sm font-semibold hover:bg-[#6B1D2F]/5 transition-all"
+              className="px-7 py-3.5 rounded-full border border-[#6B1D2F]/30 text-[#6B1D2F] text-sm font-semibold hover:bg-[#6B1D2F]/8 transition-all bg-[#F3ECE1]"
             >
               Смотреть все игры
             </button>
           </div>
-          <div className="grid grid-cols-3 gap-6 pt-6 border-t border-[#6B1D2F]/10 text-xs sm:text-sm text-[#1E1B18]/70">
+          <div className="grid grid-cols-3 gap-6 pt-6 border-t border-[#6B1D2F]/15 text-xs sm:text-sm text-[#1E1B18]/70">
             <div>
               <span className="block font-serif text-xl sm:text-2xl font-bold text-[#6B1D2F]">500+</span>
               <span>Проведенных игр</span>
@@ -363,7 +370,7 @@ function HomePage({
         </div>
 
         <div className="lg:col-span-5 relative">
-          <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-[#6B1D2F]/15 bg-white aspect-[4/3] group">
+          <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-[#6B1D2F]/20 bg-[#F3ECE1] aspect-[4/3] group">
             <SafeImage
               src={HERO_IMAGE_SRC}
               alt="Теплая дружеская встреча с вином в Evgenika Club"
@@ -379,12 +386,12 @@ function HomePage({
         </div>
       </section>
 
-      {/* 2. Occasions Strip ("Под любой ваш повод") */}
-      <section className="bg-[#1E1B18] text-[#FAF6F0] py-16 px-4 sm:px-8">
+      {/* 2. Occasions Strip ("Под любой ваш повод") in Merlot-Espresso (#221418) */}
+      <section className="bg-[#221418] text-[#FAF6F0] py-16 px-4 sm:px-8 border-y border-[#B8925A]/20">
         <div className="max-w-7xl mx-auto flex flex-col gap-10">
           <div className="text-center max-w-2xl mx-auto">
-            <span className="text-xs uppercase tracking-widest text-[#B8925A] font-semibold">Индивидуальный сценарий</span>
-            <h2 className="font-serif text-2xl sm:text-4xl font-bold mt-2">Под любой ваш повод</h2>
+            <span className="text-xs uppercase tracking-widest text-[#D4B07A] font-semibold">Индивидуальный сценарий</span>
+            <h2 className="font-serif text-2xl sm:text-4xl font-bold mt-2 text-[#FAF6F0]">Под любой ваш повод</h2>
             <p className="text-sm sm:text-base text-[#FAF6F0]/80 mt-2">
               Адаптируем интерактив под масштаб и атмосферу вашего мероприятия.
             </p>
@@ -394,28 +401,28 @@ function HomePage({
             <OccasionCard
               title="Корпоратив и тимбилдинг"
               desc="Сплачиваем команду через азарт, дегустацию и утонченное интеллектуальное соревнование."
-              icon={<Users className="w-6 h-6 text-[#B8925A]" />}
+              icon={<Users className="w-6 h-6 text-[#D4B07A]" />}
             />
             <OccasionCard
               title="День рождения"
               desc="Яркий интерактивный центр вечера, который запомнится виновнику торжества и гостям."
-              icon={<Sparkles className="w-6 h-6 text-[#B8925A]" />}
+              icon={<Sparkles className="w-6 h-6 text-[#D4B07A]" />}
             />
             <OccasionCard
               title="Девичник / Мальчишник"
               desc="Стильный старт вечера в кругу близких друзей с премиальными напитками и дегустацией."
-              icon={<Wine className="w-6 h-6 text-[#B8925A]" />}
+              icon={<Wine className="w-6 h-6 text-[#D4B07A]" />}
             />
             <OccasionCard
               title="Камерный ужин / Свидание"
               desc="Изысканный интерактивный формат для узкого круга в приватной атмосфере."
-              icon={<Star className="w-6 h-6 text-[#B8925A]" />}
+              icon={<Star className="w-6 h-6 text-[#D4B07A]" />}
             />
           </div>
         </div>
       </section>
 
-      {/* 3. Formats Overview Grid (6 cards with distinct candid imagery) */}
+      {/* 3. Formats Overview Grid (6 distinct cards on soft parchment #F3ECE1) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-8 w-full flex flex-col gap-12">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="max-w-xl">
@@ -438,42 +445,42 @@ function HomePage({
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <FormatOverviewCard
-            image="/src/assets/images/candid_wine_casino_1795613859914.jpg"
+            image={CARD_WINE_CASINO_SRC}
             title="Винное казино"
             tag="Хит мероприятий"
             desc="Азартная игра на зеленом сукне: ставки на сорта вин, регионы и крепость по слепым дегустационным бокалам."
             onSelect={() => onNavigate('#/formats')}
           />
           <FormatOverviewCard
-            image="/src/assets/images/candid_wine_quiz_1795613859986.jpg"
+            image={CARD_WINE_QUIZ_SRC}
             title="Винный квиз"
             tag="Интеллектуальное шоу"
             desc="Увлекательное командное состязание на эрудицию, логику и обоняние с мультимедийными вопросами."
             onSelect={() => onNavigate('#/formats')}
           />
           <FormatOverviewCard
-            image="/src/assets/images/candid_blind_tasting_1795613860333.jpg"
+            image={CARD_BLIND_TASTING_SRC}
             title="Слепая дегустация"
             tag="Классика сомелье"
             desc="Углубленное погружение в органолептику: угадываем год урожая, терруар и скрытые ноты в закрытых бокалах."
             onSelect={() => onNavigate('#/formats')}
           />
           <FormatOverviewCard
-            image="/src/assets/images/candid_wine_mafia_1795613860238.jpg"
+            image={CARD_WINE_MAFIA_SRC}
             title="Винная мафия"
             tag="Детективный интерактив"
             desc="Классическая психологическая игра в новом амплуа: среди мирных виноделов скрывается коварный сомелье-вредитель."
             onSelect={() => onNavigate('#/formats')}
           />
           <FormatOverviewCard
-            image={HERO_IMAGE_SRC}
+            image={CARD_SABRAGEMENT_SRC}
             title="Винная церемония и сабраж"
             tag="Шоу-элемент"
             desc="Зрелищное открытие бутылки игристого саблей под рассказ об истории благородных шампанских домов."
             onSelect={() => onNavigate('#/formats')}
           />
           <FormatOverviewCard
-            image="/src/assets/images/candid_sommelier_service_1795613861514.jpg"
+            image={CARD_SOMMELIER_BUFFET_SRC}
             title="Выездной сомелье на фуршет"
             tag="Премиум сервис"
             desc="Элегантное сопровождение welcome-зоны: профессиональная подача, увлекательные истории о винах и общение с гостями."
@@ -492,19 +499,19 @@ function HomePage({
 
 function OccasionCard({ title, desc, icon }: { title: string; desc: string; icon: React.ReactNode }) {
   return (
-    <div className="p-6 rounded-2xl bg-white/5 border border-white/10 flex flex-col gap-4 hover:border-[#B8925A]/50 transition-colors">
-      <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center">
+    <div className="p-6 rounded-2xl bg-[#2C1A20] border border-[#B8925A]/30 flex flex-col gap-4 hover:border-[#B8925A]/60 transition-colors shadow-sm">
+      <div className="w-12 h-12 rounded-xl bg-[#FAF6F0]/10 flex items-center justify-center">
         {icon}
       </div>
-      <h3 className="font-serif text-xl font-bold text-white">{title}</h3>
-      <p className="text-sm text-[#FAF6F0]/70 leading-relaxed">{desc}</p>
+      <h3 className="font-serif text-xl font-bold text-[#FAF6F0]">{title}</h3>
+      <p className="text-sm text-[#FAF6F0]/75 leading-relaxed">{desc}</p>
     </div>
   );
 }
 
 function FormatOverviewCard({ image, title, tag, desc, onSelect }: { image: string; title: string; tag: string; desc: string; onSelect: () => void }) {
   return (
-    <div className="group rounded-2xl bg-white border border-[#6B1D2F]/15 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col">
+    <div className="group rounded-2xl bg-[#F3ECE1] border border-[#6B1D2F]/15 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col">
       <div className="aspect-[4/3] overflow-hidden relative">
         <SafeImage
           src={image}
@@ -571,7 +578,7 @@ function CalculatorWidget({ onOpenProposal }: { onOpenProposal: (draft: EventDra
   const maxUrl = `${CONTACT_MAX}?text=${encodeURIComponent(summaryText)}`;
 
   return (
-    <div className="bg-white rounded-3xl border border-[#6B1D2F]/20 p-6 sm:p-10 shadow-xl flex flex-col gap-8">
+    <div className="bg-[#F3ECE1] rounded-3xl border border-[#6B1D2F]/20 p-6 sm:p-10 shadow-xl flex flex-col gap-8">
       <div className="text-center max-w-2xl mx-auto">
         <span className="text-xs uppercase tracking-widest text-[#B8925A] font-semibold">Калькулятор вечера</span>
         <h2 className="font-serif text-2xl sm:text-4xl font-bold text-[#1E1B18] mt-2">
@@ -591,7 +598,7 @@ function CalculatorWidget({ onOpenProposal }: { onOpenProposal: (draft: EventDra
           <select
             value={draft.format}
             onChange={(e) => setDraft({ ...draft, format: e.target.value })}
-            className="w-full px-4 py-3 rounded-xl border border-[#6B1D2F]/20 bg-[#FAF6F0] text-[#1E1B18] font-medium focus:outline-none focus:border-[#6B1D2F]"
+            className="w-full px-4 py-3 rounded-xl border border-[#6B1D2F]/25 bg-[#E9DFD0] text-[#1E1B18] font-medium focus:outline-none focus:border-[#6B1D2F]"
           >
             <option value="Винное казино (Хит)">Винное казино (Хит)</option>
             <option value="Винный квиз">Винный квиз (Интеллектуальная игра)</option>
@@ -610,7 +617,7 @@ function CalculatorWidget({ onOpenProposal }: { onOpenProposal: (draft: EventDra
           <select
             value={draft.occasion}
             onChange={(e) => setDraft({ ...draft, occasion: e.target.value })}
-            className="w-full px-4 py-3 rounded-xl border border-[#6B1D2F]/20 bg-[#FAF6F0] text-[#1E1B18] font-medium focus:outline-none focus:border-[#6B1D2F]"
+            className="w-full px-4 py-3 rounded-xl border border-[#6B1D2F]/25 bg-[#E9DFD0] text-[#1E1B18] font-medium focus:outline-none focus:border-[#6B1D2F]"
           >
             <option value="Корпоратив / Тимбилдинг">Корпоратив / Тимбилдинг</option>
             <option value="День рождения / Юбилей">День рождения / Юбилей</option>
@@ -628,7 +635,7 @@ function CalculatorWidget({ onOpenProposal }: { onOpenProposal: (draft: EventDra
           <select
             value={draft.guests}
             onChange={(e) => setDraft({ ...draft, guests: e.target.value })}
-            className="w-full px-4 py-3 rounded-xl border border-[#6B1D2F]/20 bg-[#FAF6F0] text-[#1E1B18] font-medium focus:outline-none focus:border-[#6B1D2F]"
+            className="w-full px-4 py-3 rounded-xl border border-[#6B1D2F]/25 bg-[#E9DFD0] text-[#1E1B18] font-medium focus:outline-none focus:border-[#6B1D2F]"
           >
             <option value="6–10 гостей (камерный формат)">6–10 гостей (камерный формат)</option>
             <option value="10–20 гостей (оптимально)">10–20 гостей (оптимально)</option>
@@ -647,7 +654,7 @@ function CalculatorWidget({ onOpenProposal }: { onOpenProposal: (draft: EventDra
               type="date"
               value={draft.date}
               onChange={(e) => setDraft({ ...draft, date: e.target.value })}
-              className="w-full px-4 py-3 rounded-xl border border-[#6B1D2F]/20 bg-[#FAF6F0] text-[#1E1B18] font-medium focus:outline-none focus:border-[#6B1D2F]"
+              className="w-full px-4 py-3 rounded-xl border border-[#6B1D2F]/25 bg-[#E9DFD0] text-[#1E1B18] font-medium focus:outline-none focus:border-[#6B1D2F]"
             />
           </div>
           <div className="flex flex-col gap-2">
@@ -659,7 +666,7 @@ function CalculatorWidget({ onOpenProposal }: { onOpenProposal: (draft: EventDra
               value={draft.location}
               onChange={(e) => setDraft({ ...draft, location: e.target.value })}
               placeholder="Крым / Ваш город или площадка"
-              className="w-full px-4 py-3 rounded-xl border border-[#6B1D2F]/20 bg-[#FAF6F0] text-[#1E1B18] font-medium focus:outline-none focus:border-[#6B1D2F]"
+              className="w-full px-4 py-3 rounded-xl border border-[#6B1D2F]/25 bg-[#E9DFD0] text-[#1E1B18] font-medium focus:outline-none focus:border-[#6B1D2F]"
             />
           </div>
         </div>
@@ -677,7 +684,7 @@ function CalculatorWidget({ onOpenProposal }: { onOpenProposal: (draft: EventDra
             <span>Открыть коммерческое предложение (КП)</span>
           </button>
         </div>
-        <div className="bg-white rounded-xl p-4 border border-[#6B1D2F]/10 font-mono text-xs sm:text-sm text-[#1E1B18] whitespace-pre-wrap leading-relaxed">
+        <div className="bg-[#FAF6F0] rounded-xl p-4 border border-[#6B1D2F]/15 font-mono text-xs sm:text-sm text-[#1E1B18] whitespace-pre-wrap leading-relaxed">
           {summaryText}
         </div>
         <div className="flex flex-wrap items-center gap-4 pt-2">
@@ -736,7 +743,7 @@ function ProposalModal({ draft, onClose }: { draft: EventDraft; onClose: () => v
         {/* Proposal Header */}
         <div className="flex flex-col sm:flex-row items-center sm:items-start justify-between gap-6 border-b border-[#6B1D2F]/20 pb-6 text-center sm:text-left">
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-[#B8925A] shrink-0 bg-white p-0.5 shadow-sm flex items-center justify-center">
+            <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-[#B8925A] shrink-0 bg-[#F3ECE1] p-0.5 shadow-sm flex items-center justify-center">
               <SafeImage
                 src={LOGO_GLASSES_SRC}
                 alt="Evgenika Club"
@@ -757,7 +764,7 @@ function ProposalModal({ draft, onClose }: { draft: EventDraft; onClose: () => v
 
         {/* Proposal Content */}
         <div className="flex flex-col gap-6">
-          <div className="bg-white rounded-2xl p-6 border border-[#6B1D2F]/15 shadow-sm flex flex-col gap-4">
+          <div className="bg-[#F3ECE1] rounded-2xl p-6 border border-[#6B1D2F]/15 shadow-sm flex flex-col gap-4">
             <h3 className="font-serif text-lg font-bold text-[#1E1B18] border-b border-[#6B1D2F]/10 pb-2">
               Параметры вашего мероприятия
             </h3>
@@ -783,7 +790,7 @@ function ProposalModal({ draft, onClose }: { draft: EventDraft; onClose: () => v
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl p-6 border border-[#6B1D2F]/15 shadow-sm flex flex-col gap-4">
+          <div className="bg-[#F3ECE1] rounded-2xl p-6 border border-[#6B1D2F]/15 shadow-sm flex flex-col gap-4">
             <h3 className="font-serif text-lg font-bold text-[#1E1B18] border-b border-[#6B1D2F]/10 pb-2">
               Что входит в организацию под ключ
             </h3>
@@ -797,7 +804,7 @@ function ProposalModal({ draft, onClose }: { draft: EventDraft; onClose: () => v
             </ul>
           </div>
 
-          <div className="bg-[#6B1D2F]/5 rounded-2xl p-6 border border-[#6B1D2F]/20 flex flex-col gap-3 text-center sm:text-left">
+          <div className="bg-[#6B1D2F]/8 rounded-2xl p-6 border border-[#6B1D2F]/20 flex flex-col gap-3 text-center sm:text-left">
             <h4 className="font-serif text-base font-bold text-[#6B1D2F]">Как забронировать дату и получить расчет</h4>
             <p className="text-sm text-[#1E1B18]/80 leading-relaxed">
               Свяжитесь с нами удобным способом для согласования меню, деталей площадки и окончательной стоимости:
@@ -865,10 +872,10 @@ function FormatsPage({ onNavigate }: { onNavigate: (hash: string) => void }) {
         </p>
       </section>
 
-      {/* Detailed Formats Breakdown (6 formats matching the grid with candid imagery) */}
+      {/* Detailed Formats Breakdown (6 distinct formats with distinct imagery) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-8 w-full flex flex-col gap-20">
         <FormatDetailRow
-          image="/src/assets/images/candid_wine_casino_1795613859914.jpg"
+          image={CARD_WINE_CASINO_SRC}
           badge="Хит вечера"
           title="1. Винное казино"
           subtitle="Азарт классической рулетки в сочетании с благородными ароматами"
@@ -883,7 +890,7 @@ function FormatsPage({ onNavigate }: { onNavigate: (hash: string) => void }) {
         />
 
         <FormatDetailRow
-          image="/src/assets/images/candid_wine_quiz_1795613859986.jpg"
+          image={CARD_WINE_QUIZ_SRC}
           badge="Интеллектуальное шоу"
           title="2. Винный квиз"
           subtitle="Интерактивное командное состязание на эрудицию, логику и обоняние"
@@ -899,7 +906,7 @@ function FormatsPage({ onNavigate }: { onNavigate: (hash: string) => void }) {
         />
 
         <FormatDetailRow
-          image="/src/assets/images/candid_blind_tasting_1795613860333.jpg"
+          image={CARD_BLIND_TASTING_SRC}
           badge="Классика сомелье"
           title="3. Слепая дегустация"
           subtitle="Глубокое погружение в органолептику редких вин и терруаров"
@@ -914,7 +921,7 @@ function FormatsPage({ onNavigate }: { onNavigate: (hash: string) => void }) {
         />
 
         <FormatDetailRow
-          image="/src/assets/images/candid_wine_mafia_1795613860238.jpg"
+          image={CARD_WINE_MAFIA_SRC}
           badge="Детективный интерактив"
           title="4. Винная мафия"
           subtitle="Психологическая игра в новом благородном формате"
@@ -930,7 +937,7 @@ function FormatsPage({ onNavigate }: { onNavigate: (hash: string) => void }) {
         />
 
         <FormatDetailRow
-          image={HERO_IMAGE_SRC}
+          image={CARD_SABRAGEMENT_SRC}
           badge="Шоу-элемент"
           title="5. Винная церемония и сабраж"
           subtitle="Эффектное открытие бутылки игристого саблей"
@@ -945,7 +952,7 @@ function FormatsPage({ onNavigate }: { onNavigate: (hash: string) => void }) {
         />
 
         <FormatDetailRow
-          image="/src/assets/images/candid_sommelier_service_1795613861514.jpg"
+          image={CARD_SOMMELIER_BUFFET_SRC}
           badge="Премиум сервис"
           title="6. Выездной сомелье на фуршет"
           subtitle="Изысканное винное сопровождение вашего welcome-мероприятия"
@@ -961,12 +968,12 @@ function FormatsPage({ onNavigate }: { onNavigate: (hash: string) => void }) {
         />
       </section>
 
-      {/* "Что входит в организацию вечера" Checklist */}
-      <section className="bg-[#1E1B18] text-[#FAF6F0] py-20 px-4 sm:px-8 my-8">
+      {/* "Что входит в организацию вечера" Checklist in Merlot-Espresso (#221418) */}
+      <section className="bg-[#221418] text-[#FAF6F0] py-20 px-4 sm:px-8 my-8 border-y border-[#B8925A]/20">
         <div className="max-w-7xl mx-auto flex flex-col gap-12">
           <div className="text-center max-w-2xl mx-auto">
-            <span className="text-xs uppercase tracking-widest text-[#B8925A] font-semibold">Все включено</span>
-            <h2 className="font-serif text-2xl sm:text-4xl font-bold mt-2">Что входит в организацию вечера</h2>
+            <span className="text-xs uppercase tracking-widest text-[#D4B07A] font-semibold">Все включено</span>
+            <h2 className="font-serif text-2xl sm:text-4xl font-bold mt-2 text-[#FAF6F0]">Что входит в организацию вечера</h2>
             <p className="text-sm sm:text-base text-[#FAF6F0]/80 mt-2">
               Мы берем на себя 100% забот: от премиального реквизита до работы профессионального сомелье.
             </p>
@@ -975,7 +982,7 @@ function FormatsPage({ onNavigate }: { onNavigate: (hash: string) => void }) {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <CheckItem
               title="Премиальная винная карта"
-              desc="Отборные вина проверенных хозяйств Европы и Нового Света, гармонично подборные под ваш формат."
+              desc="Отборные вина проверенных хозяйств Европы и Нового Света, гармонично подобранные под ваш формат."
             />
             <CheckItem
               title="Профессиональные бокалы"
@@ -1102,12 +1109,12 @@ function FormatDetailRow({
 
 function CheckItem({ title, desc }: { title: string; desc: string }) {
   return (
-    <div className="p-6 rounded-2xl bg-white/5 border border-white/10 flex flex-col gap-3">
+    <div className="p-6 rounded-2xl bg-[#2C1A20] border border-[#B8925A]/30 flex flex-col gap-3 shadow-sm">
       <div className="flex items-center gap-3">
-        <CheckSquare className="w-5 h-5 text-[#B8925A]" />
-        <h3 className="font-serif text-lg font-bold text-white">{title}</h3>
+        <CheckSquare className="w-5 h-5 text-[#D4B07A]" />
+        <h3 className="font-serif text-lg font-bold text-[#FAF6F0]">{title}</h3>
       </div>
-      <p className="text-sm text-[#FAF6F0]/70 leading-relaxed">{desc}</p>
+      <p className="text-sm text-[#FAF6F0]/75 leading-relaxed">{desc}</p>
     </div>
   );
 }
@@ -1116,7 +1123,7 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="border border-[#6B1D2F]/20 rounded-2xl bg-white overflow-hidden shadow-sm transition-all">
+    <div className="border border-[#6B1D2F]/20 rounded-2xl bg-[#F3ECE1] overflow-hidden shadow-sm transition-all">
       <button
         onClick={() => setOpen(!open)}
         className="w-full p-6 text-left flex items-center justify-between gap-4 focus:outline-none"
@@ -1125,7 +1132,7 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
         {open ? <ChevronUp className="w-5 h-5 text-[#6B1D2F]" /> : <ChevronDown className="w-5 h-5 text-[#6B1D2F]" />}
       </button>
       {open && (
-        <div className="px-6 pb-6 text-sm text-[#1E1B18]/80 leading-relaxed border-t border-[#6B1D2F]/10 pt-4">
+        <div className="px-6 pb-6 text-sm text-[#1E1B18]/80 leading-relaxed border-t border-[#6B1D2F]/15 pt-4 bg-[#E9DFD0]">
           {answer}
         </div>
       )}
@@ -1136,12 +1143,12 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
 // --- Footer ---
 function Footer() {
   return (
-    <footer className="bg-[#1E1B18] text-[#FAF6F0] pt-16 pb-12 px-4 sm:px-8 border-t border-white/10 mt-auto print:hidden">
+    <footer className="bg-[#221418] text-[#FAF6F0] pt-16 pb-12 px-4 sm:px-8 border-t border-[#B8925A]/20 mt-auto print:hidden">
       <div className="max-w-7xl mx-auto flex flex-col gap-12">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
           <div className="md:col-span-6 flex flex-col gap-4">
             <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-full overflow-hidden border border-[#B8925A]/40 shrink-0 bg-white p-0.5 flex items-center justify-center">
+              <div className="w-11 h-11 rounded-full overflow-hidden border border-[#B8925A]/40 shrink-0 bg-[#F3ECE1] p-0.5 flex items-center justify-center">
                 <SafeImage
                   src={LOGO_GLASSES_SRC}
                   alt="Evgenika Club"
@@ -1149,7 +1156,7 @@ function Footer() {
                   title="Evgenika Club"
                 />
               </div>
-              <span className="font-serif text-2xl font-bold tracking-tight text-white">
+              <span className="font-serif text-2xl font-bold tracking-tight text-[#FAF6F0]">
                 Evgenika Club
               </span>
             </div>
@@ -1159,22 +1166,22 @@ function Footer() {
           </div>
 
           <div className="md:col-span-3 flex flex-col gap-3">
-            <span className="text-xs uppercase tracking-widest text-[#B8925A] font-semibold">Навигация</span>
+            <span className="text-xs uppercase tracking-widest text-[#D4B07A] font-semibold">Навигация</span>
             <a href="#/" className="text-sm text-[#FAF6F0]/80 hover:text-white transition-colors">Главная страница</a>
             <a href="#/formats" className="text-sm text-[#FAF6F0]/80 hover:text-white transition-colors">Форматы и игры</a>
             <a href="#/formats" className="text-sm text-[#FAF6F0]/80 hover:text-white transition-colors">Вопросы и ответы</a>
           </div>
 
           <div className="md:col-span-3 flex flex-col gap-3">
-            <span className="text-xs uppercase tracking-widest text-[#B8925A] font-semibold">Контакты и бронь</span>
+            <span className="text-xs uppercase tracking-widest text-[#D4B07A] font-semibold">Контакты и бронь</span>
             <span className="text-sm text-[#FAF6F0]/80">Крым, Москва, СПб и другие города</span>
-            <a href={CONTACT_TELEGRAM} target="_blank" rel="noopener noreferrer" className="text-sm text-[#B8925A] hover:underline font-medium">
+            <a href={CONTACT_TELEGRAM} target="_blank" rel="noopener noreferrer" className="text-sm text-[#D4B07A] hover:underline font-medium">
               Telegram / Мессенджеры
             </a>
           </div>
         </div>
 
-        <div className="border-t border-white/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#FAF6F0]/60">
+        <div className="border-t border-[#B8925A]/20 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#FAF6F0]/60">
           <p>© {new Date().getFullYear()} Evgenika Club. Все права защищены.</p>
           <p className="text-center sm:text-right max-w-xl">
             18+. Мероприятия предназначены для совершеннолетних. Мы не осуществляем дистанционную продажу алкоголя — оказываются исключительно услуги проведения дегустаций и винных игр.
