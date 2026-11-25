@@ -29,8 +29,9 @@ import {
 const CONTACT_TELEGRAM = 'https://t.me/eugenica_club';
 const CONTACT_MAX = 'https://max.ru/eugenica_club';
 
-// --- Logo Asset Constant ---
+// --- Logo & Asset Constants ---
 const LOGO_GLASSES_SRC = '/src/assets/images/logo_two_wine_glasses_1795615021848.jpg';
+const HERO_IMAGE_SRC = '/src/assets/images/hero_candid_wine_gathering_1795613860686.jpg';
 
 // --- Booking Message Types & Builder ---
 type EventDraft = {
@@ -110,16 +111,18 @@ export default function App() {
   );
 }
 
-// --- Image with Robust Fallback (Zero Broken Images) ---
+// --- Image with Burgundy/Gold Card Fallback (Zero Broken Images) ---
 function SafeImage({ src, alt, className, title }: { src: string; alt: string; className?: string; title: string }) {
   const [hasError, setHasError] = useState(false);
 
   if (hasError) {
     return (
-      <div className={`w-full h-full bg-[#FAF6F0] border border-[#6B1D2F]/20 flex flex-col items-center justify-center p-6 text-center ${className || ''}`}>
-        <Wine className="w-10 h-10 text-[#6B1D2F] mb-2 opacity-80" />
-        <span className="font-serif text-sm font-semibold text-[#1E1B18]">{title}</span>
-        <span className="text-xs text-[#1E1B18]/60 mt-1">Evgenika Club</span>
+      <div className={`w-full h-full bg-[#FAF6F0] border-2 border-[#6B1D2F]/30 flex flex-col items-center justify-center p-6 text-center ${className || ''}`}>
+        <div className="w-12 h-12 rounded-full bg-[#6B1D2F]/10 flex items-center justify-center mb-3">
+          <Wine className="w-6 h-6 text-[#6B1D2F]" />
+        </div>
+        <span className="font-serif text-sm font-bold text-[#6B1D2F]">{title}</span>
+        <span className="text-xs text-[#B8925A] mt-1 font-medium">Evgenika Club</span>
       </div>
     );
   }
@@ -315,7 +318,7 @@ function HomePage({
 }) {
   return (
     <div className="flex flex-col gap-20 pb-24">
-      {/* 1. Hero Section with Real Candid Photograph */}
+      {/* 1. Hero Section with Bundled Hero Photograph */}
       <section className="relative px-4 sm:px-8 pt-12 sm:pt-20 max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         <div className="lg:col-span-7 flex flex-col gap-6">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#B8925A]/10 text-[#B8925A] text-xs font-semibold tracking-wide w-fit">
@@ -362,7 +365,7 @@ function HomePage({
         <div className="lg:col-span-5 relative">
           <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-[#6B1D2F]/15 bg-white aspect-[4/3] group">
             <SafeImage
-              src="/src/assets/images/hero_candid_wine_gathering_1795613860686.jpg"
+              src={HERO_IMAGE_SRC}
               alt="Теплая дружеская встреча с вином в Evgenika Club"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               title="Evgenika Club — Атмосфера вечера"
@@ -463,7 +466,7 @@ function HomePage({
             onSelect={() => onNavigate('#/formats')}
           />
           <FormatOverviewCard
-            image="/src/assets/images/hero_candid_wine_gathering_1795613860686.jpg"
+            image={HERO_IMAGE_SRC}
             title="Винная церемония и сабраж"
             tag="Шоу-элемент"
             desc="Зрелищное открытие бутылки игристого саблей под рассказ об истории благородных шампанских домов."
@@ -927,7 +930,7 @@ function FormatsPage({ onNavigate }: { onNavigate: (hash: string) => void }) {
         />
 
         <FormatDetailRow
-          image="/src/assets/images/hero_candid_wine_gathering_1795613860686.jpg"
+          image={HERO_IMAGE_SRC}
           badge="Шоу-элемент"
           title="5. Винная церемония и сабраж"
           subtitle="Эффектное открытие бутылки игристого саблей"
@@ -972,7 +975,7 @@ function FormatsPage({ onNavigate }: { onNavigate: (hash: string) => void }) {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <CheckItem
               title="Премиальная винная карта"
-              desc="Отборные вина проверенных хозяйств Европы и Нового Света, гармонично подобранные под ваш формат."
+              desc="Отборные вина проверенных хозяйств Европы и Нового Света, гармонично подборные под ваш формат."
             />
             <CheckItem
               title="Профессиональные бокалы"
