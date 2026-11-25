@@ -20,12 +20,17 @@ import {
   PhoneCall,
   Flame,
   Star,
-  CheckSquare
+  CheckSquare,
+  FileText,
+  Printer
 } from 'lucide-react';
 
 // --- Contact Constants ---
 const CONTACT_TELEGRAM = 'https://t.me/eugenica_club';
 const CONTACT_MAX = 'https://max.ru/eugenica_club';
+
+// --- Logo Asset Constant ---
+const LOGO_GLASSES_SRC = '/src/assets/images/logo_two_wine_glasses_1795615021848.jpg';
 
 // --- Booking Message Types & Builder ---
 type EventDraft = {
@@ -63,6 +68,8 @@ export function buildBookingMessage(draft: EventDraft): string {
 
 export default function App() {
   const [currentHash, setCurrentHash] = useState<string>(window.location.hash || '#/');
+  const [proposalModalOpen, setProposalModalOpen] = useState(false);
+  const [proposalDraft, setProposalDraft] = useState<EventDraft>(DEFAULT_DRAFT);
 
   // Listen to hash changes for hash routing
   useEffect(() => {
@@ -78,18 +85,27 @@ export default function App() {
     window.location.hash = hash;
   };
 
+  const openProposal = (draft: EventDraft) => {
+    setProposalDraft(draft);
+    setProposalModalOpen(true);
+  };
+
   // Determine active page
   const isFormatsPage = currentHash.startsWith('#/formats');
 
   return (
     <div className="min-h-screen flex flex-col bg-[#FAF6F0] text-[#1E1B18] antialiased selection:bg-[#6B1D2F] selection:text-[#FAF6F0]">
-      <StickyHeader currentHash={currentHash} onNavigate={navigateTo} />
+      <StickyHeader currentHash={currentHash} onNavigate={navigateTo} onOpenProposal={() => openProposal(proposalDraft)} />
       
       <main className="flex-grow">
-        {isFormatsPage ? <FormatsPage onNavigate={navigateTo} /> : <HomePage onNavigate={navigateTo} />}
+        {isFormatsPage ? <FormatsPage onNavigate={navigateTo} /> : <HomePage onNavigate={navigateTo} onOpenProposal={openProposal} />}
       </main>
 
       <Footer />
+
+      {proposalModalOpen && (
+        <ProposalModal draft={proposalDraft} onClose={() => setProposalModalOpen(false)} />
+      )}
     </div>
   );
 }
@@ -120,7 +136,15 @@ function SafeImage({ src, alt, className, title }: { src: string; alt: string; c
 }
 
 // --- Sticky Header ---
-function StickyHeader({ currentHash, onNavigate }: { currentHash: string; onNavigate: (hash: string) => void }) {
+function StickyHeader({
+  currentHash,
+  onNavigate,
+  onOpenProposal
+}: {
+  currentHash: string;
+  onNavigate: (hash: string) => void;
+  onOpenProposal: () => void;
+}) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const isFormats = currentHash.startsWith('#/formats');
 
@@ -137,19 +161,29 @@ function StickyHeader({ currentHash, onNavigate }: { currentHash: string; onNavi
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-[#FAF6F0]/95 backdrop-blur-md border-b border-[#6B1D2F]/10 px-4 sm:px-8 py-4 transition-all">
+    <header className="sticky top-0 z-45 bg-[#FAF6F0]/95 backdrop-blur-md border-b border-[#6B1D2F]/10 px-4 sm:px-8 py-3.5 transition-all">
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
-        {/* Logo & Subtitle */}
+        {/* Logo & Subtitle with Two-Wine-Glass Emblem */}
         <button
           onClick={() => onNavigate('#/')}
-          className="text-left group focus:outline-none"
+          className="flex items-center gap-3 text-left group focus:outline-none"
         >
-          <span className="font-serif text-xl sm:text-2xl font-bold tracking-tight text-[#6B1D2F] group-hover:opacity-90 transition-opacity">
-            Евгеника Club
-          </span>
-          <span className="block text-[11px] sm:text-xs tracking-wider uppercase text-[#B8925A] font-medium">
-            Винные игры и дегустации
-          </span>
+          <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden border border-[#B8925A]/40 shrink-0 shadow-sm bg-white flex items-center justify-center">
+            <SafeImage
+              src={LOGO_GLASSES_SRC}
+              alt="Евгеника Club Логотип"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+              title="Евгеника Club"
+            />
+          </div>
+          <div>
+            <span className="font-serif text-lg sm:text-xl font-bold tracking-tight text-[#6B1D2F] group-hover:opacity-90 transition-opacity block leading-tight">
+              Евгеника Club
+            </span>
+            <span className="block text-[10px] sm:text-[11px] tracking-wider uppercase text-[#B8925A] font-medium leading-none mt-0.5">
+              Винные игры и дегустации
+            </span>
+          </div>
         </button>
 
         {/* Desktop Navigation */}
@@ -189,8 +223,15 @@ function StickyHeader({ currentHash, onNavigate }: { currentHash: string; onNavi
           </a>
         </nav>
 
-        {/* CTA Button */}
+        {/* CTA Buttons */}
         <div className="hidden sm:flex items-center gap-3">
+          <button
+            onClick={onOpenProposal}
+            className="px-4 py-2.5 rounded-full border border-[#6B1D2F]/30 text-[#6B1D2F] text-xs sm:text-sm font-semibold hover:bg-[#6B1D2F]/5 transition-all flex items-center gap-1.5 whitespace-nowrap"
+          >
+            <FileText className="w-4 h-4" />
+            <span>Коммерческое КП</span>
+          </button>
           <button
             onClick={scrollToCalculator}
             className="px-5 py-2.5 rounded-full bg-[#6B1D2F] text-[#FAF6F0] text-xs sm:text-sm font-semibold hover:bg-[#4A1220] transition-all shadow-sm hover:shadow active:scale-95 whitespace-nowrap"
@@ -243,8 +284,18 @@ function StickyHeader({ currentHash, onNavigate }: { currentHash: string; onNavi
             Вопросы и ответы
           </button>
           <button
+            onClick={() => {
+              setMobileMenuOpen(false);
+              onOpenProposal();
+            }}
+            className="w-full py-3 rounded-full border border-[#6B1D2F]/30 text-[#6B1D2F] text-sm font-semibold text-center flex items-center justify-center gap-2"
+          >
+            <FileText className="w-4 h-4" />
+            <span>Коммерческое предложение (КП)</span>
+          </button>
+          <button
             onClick={scrollToCalculator}
-            className="w-full mt-2 py-3 rounded-full bg-[#6B1D2F] text-[#FAF6F0] text-sm font-semibold text-center shadow-sm"
+            className="w-full py-3 rounded-full bg-[#6B1D2F] text-[#FAF6F0] text-sm font-semibold text-center shadow-sm"
           >
             Рассчитать вечер
           </button>
@@ -255,7 +306,13 @@ function StickyHeader({ currentHash, onNavigate }: { currentHash: string; onNavi
 }
 
 // --- Page 1: Home ---
-function HomePage({ onNavigate }: { onNavigate: (hash: string) => void }) {
+function HomePage({
+  onNavigate,
+  onOpenProposal
+}: {
+  onNavigate: (hash: string) => void;
+  onOpenProposal: (draft: EventDraft) => void;
+}) {
   return (
     <div className="flex flex-col gap-20 pb-24">
       {/* 1. Hero Section */}
@@ -424,7 +481,7 @@ function HomePage({ onNavigate }: { onNavigate: (hash: string) => void }) {
 
       {/* 4. Interactive Event Brief Calculator */}
       <section id="calculator-section" className="max-w-5xl mx-auto px-4 sm:px-8 w-full">
-        <CalculatorWidget />
+        <CalculatorWidget onOpenProposal={onOpenProposal} />
       </section>
     </div>
   );
@@ -476,7 +533,7 @@ function FormatOverviewCard({ image, title, tag, desc, onSelect }: { image: stri
 // --- Interactive Calculator Component (using EventDraft and buildBookingMessage) ---
 const STORAGE_KEY = 'eugenica_calc_brief_v4';
 
-function CalculatorWidget() {
+function CalculatorWidget({ onOpenProposal }: { onOpenProposal: (draft: EventDraft) => void }) {
   const [draft, setDraft] = useState<EventDraft>(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
@@ -607,9 +664,15 @@ function CalculatorWidget() {
 
       {/* Generated Preview & Actions */}
       <div className="rounded-2xl bg-[#FAF6F0] border border-[#6B1D2F]/15 p-6 flex flex-col gap-4">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between flex-wrap gap-2">
           <span className="text-xs uppercase tracking-wider font-bold text-[#6B1D2F]">Готовый текст заявки</span>
-          <span className="text-xs text-[#1E1B18]/60">Автосохранение в браузере</span>
+          <button
+            onClick={() => onOpenProposal(draft)}
+            className="px-4 py-2 rounded-xl bg-[#6B1D2F]/10 text-[#6B1D2F] text-xs font-bold hover:bg-[#6B1D2F]/20 transition-all flex items-center gap-1.5"
+          >
+            <FileText className="w-3.5 h-3.5" />
+            <span>Открыть коммерческое предложение (КП)</span>
+          </button>
         </div>
         <div className="bg-white rounded-xl p-4 border border-[#6B1D2F]/10 font-mono text-xs sm:text-sm text-[#1E1B18] whitespace-pre-wrap leading-relaxed">
           {summaryText}
@@ -641,6 +704,144 @@ function CalculatorWidget() {
             <span>Написать в MAX</span>
           </a>
         </div>
+      </div>
+    </div>
+  );
+}
+
+// --- Printable Commercial Proposal Modal (КП) ---
+function ProposalModal({ draft, onClose }: { draft: EventDraft; onClose: () => void }) {
+  const handlePrint = () => {
+    window.print();
+  };
+
+  const cleanGuests = draft.guests.replace(/\s*\(.*?\)/g, '').trim();
+
+  return (
+    <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 overflow-y-auto animate-fadeIn">
+      <div className="bg-[#FAF6F0] rounded-3xl border border-[#6B1D2F]/20 max-w-3xl w-full p-6 sm:p-10 shadow-2xl relative flex flex-col gap-8 my-8 print:m-0 print:shadow-none print:border-none print:w-full print:max-w-none">
+        
+        {/* Close Button (Hidden on Print) */}
+        <button
+          onClick={onClose}
+          className="absolute top-6 right-6 p-2 rounded-full bg-[#6B1D2F]/10 text-[#6B1D2F] hover:bg-[#6B1D2F]/25 transition-colors print:hidden"
+          aria-label="Закрыть"
+        >
+          <X className="w-5 h-5" />
+        </button>
+
+        {/* Proposal Header */}
+        <div className="flex flex-col sm:flex-row items-center sm:items-start justify-between gap-6 border-b border-[#6B1D2F]/20 pb-6 text-center sm:text-left">
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-[#B8925A] shrink-0 bg-white shadow-sm flex items-center justify-center">
+              <SafeImage
+                src={LOGO_GLASSES_SRC}
+                alt="Евгеника Club"
+                className="w-full h-full object-cover"
+                title="Евгеника Club"
+              />
+            </div>
+            <div>
+              <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#6B1D2F]">Евгеника Club</h2>
+              <span className="text-xs uppercase tracking-widest text-[#B8925A] font-semibold">Коммерческое предложение</span>
+            </div>
+          </div>
+          <div className="text-xs text-[#1E1B18]/70 text-right sm:block">
+            <p className="font-semibold text-[#1E1B18]">Выездные винные игры и дегустации</p>
+            <p>Дата формирования: {new Date().toLocaleDateString('ru-RU')}</p>
+          </div>
+        </div>
+
+        {/* Proposal Content */}
+        <div className="flex flex-col gap-6">
+          <div className="bg-white rounded-2xl p-6 border border-[#6B1D2F]/15 shadow-sm flex flex-col gap-4">
+            <h3 className="font-serif text-lg font-bold text-[#1E1B18] border-b border-[#6B1D2F]/10 pb-2">
+              Параметры вашего мероприятия
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+              <div>
+                <span className="text-[#1E1B18]/60 block text-xs uppercase tracking-wider">Выбранный формат</span>
+                <strong className="text-[#6B1D2F] text-base">{draft.format}</strong>
+              </div>
+              <div>
+                <span className="text-[#1E1B18]/60 block text-xs uppercase tracking-wider">Повод события</span>
+                <strong className="text-[#1E1B18]">{draft.occasion}</strong>
+              </div>
+              <div>
+                <span className="text-[#1E1B18]/60 block text-xs uppercase tracking-wider">Количество гостей</span>
+                <strong className="text-[#1E1B18]">{cleanGuests}</strong>
+              </div>
+              <div>
+                <span className="text-[#1E1B18]/60 block text-xs uppercase tracking-wider">Дата и локация</span>
+                <strong className="text-[#1E1B18]">
+                  {draft.date ? draft.date : 'уточняется'} / {draft.location.trim() || 'Крым / Ваш город'}
+                </strong>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl p-6 border border-[#6B1D2F]/15 shadow-sm flex flex-col gap-4">
+            <h3 className="font-serif text-lg font-bold text-[#1E1B18] border-b border-[#6B1D2F]/10 pb-2">
+              Что входит в организацию под ключ
+            </h3>
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-[#1E1B18]/85">
+              <li className="flex items-center gap-2"><Check className="w-4 h-4 text-[#B8925A]" /> Премиальная винная карта</li>
+              <li className="flex items-center gap-2"><Check className="w-4 h-4 text-[#B8925A]" /> Профессиональные бокалы</li>
+              <li className="flex items-center gap-2"><Check className="w-4 h-4 text-[#B8925A]" /> Игровое сукно, фишки и реквизит</li>
+              <li className="flex items-center gap-2"><Check className="w-4 h-4 text-[#B8925A]" /> Работа ведущего-сомелье</li>
+              <li className="flex items-center gap-2"><Check className="w-4 h-4 text-[#B8925A]" /> Индивидуальный тайминг и сценарий</li>
+              <li className="flex items-center gap-2"><Check className="w-4 h-4 text-[#B8925A]" /> Доставка и монтаж оборудования</li>
+            </ul>
+          </div>
+
+          <div className="bg-[#6B1D2F]/5 rounded-2xl p-6 border border-[#6B1D2F]/20 flex flex-col gap-3 text-center sm:text-left">
+            <h4 className="font-serif text-base font-bold text-[#6B1D2F]">Как забронировать дату и получить расчет</h4>
+            <p className="text-sm text-[#1E1B18]/80 leading-relaxed">
+              Свяжитесь с нами удобным способом для согласования меню, деталей площадки и окончательной стоимости:
+            </p>
+            <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4 pt-2">
+              <a
+                href={`${CONTACT_TELEGRAM}?text=${encodeURIComponent(buildBookingMessage(draft))}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-5 py-2.5 rounded-xl bg-[#0088cc] text-white text-xs font-semibold hover:opacity-90 transition-opacity flex items-center gap-2"
+              >
+                <Send className="w-3.5 h-3.5" />
+                <span>Telegram: @eugenica_club</span>
+              </a>
+              <a
+                href={`${CONTACT_MAX}?text=${encodeURIComponent(buildBookingMessage(draft))}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-5 py-2.5 rounded-xl bg-[#2C3E50] text-white text-xs font-semibold hover:opacity-90 transition-opacity flex items-center gap-2"
+              >
+                <PhoneCall className="w-3.5 h-3.5" />
+                <span>MAX</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer & Compliance Notice */}
+        <div className="border-t border-[#6B1D2F]/20 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#1E1B18]/60 text-center sm:text-left">
+          <p>18+. Мероприятия предназначены для совершеннолетних. Дистанционная продажа алкоголя не осуществляется.</p>
+          <div className="flex items-center gap-3 print:hidden">
+            <button
+              onClick={handlePrint}
+              className="px-5 py-2.5 rounded-xl bg-[#6B1D2F] text-[#FAF6F0] font-semibold hover:bg-[#4A1220] transition-colors flex items-center gap-2 shadow-sm"
+            >
+              <Printer className="w-4 h-4" />
+              <span>Печать / Сохранить в PDF</span>
+            </button>
+            <button
+              onClick={onClose}
+              className="px-5 py-2.5 rounded-xl border border-[#6B1D2F]/30 text-[#6B1D2F] font-semibold hover:bg-[#6B1D2F]/5 transition-colors"
+            >
+              Закрыть
+            </button>
+          </div>
+        </div>
+
       </div>
     </div>
   );
@@ -932,13 +1133,23 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
 // --- Footer ---
 function Footer() {
   return (
-    <footer className="bg-[#1E1B18] text-[#FAF6F0] pt-16 pb-12 px-4 sm:px-8 border-t border-white/10 mt-auto">
+    <footer className="bg-[#1E1B18] text-[#FAF6F0] pt-16 pb-12 px-4 sm:px-8 border-t border-white/10 mt-auto print:hidden">
       <div className="max-w-7xl mx-auto flex flex-col gap-12">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
           <div className="md:col-span-6 flex flex-col gap-4">
-            <span className="font-serif text-2xl font-bold tracking-tight text-white">
-              Евгеника Club
-            </span>
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full overflow-hidden border border-[#B8925A]/40 shrink-0 bg-white flex items-center justify-center">
+                <SafeImage
+                  src={LOGO_GLASSES_SRC}
+                  alt="Евгеника Club"
+                  className="w-full h-full object-cover"
+                  title="Евгеника Club"
+                />
+              </div>
+              <span className="font-serif text-2xl font-bold tracking-tight text-white">
+                Евгеника Club
+              </span>
+            </div>
             <p className="text-sm text-[#FAF6F0]/70 max-w-md leading-relaxed">
               Элегантные выездные винные игры, казино и дегустации премиального формата для корпоративных и частных событий.
             </p>
