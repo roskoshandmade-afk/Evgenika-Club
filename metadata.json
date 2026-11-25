@@ -2,5 +2,7 @@
   "name": "Евгеника Club",
   "description": "Элегантные выездные винные игры, дегустации и винное казино премиум-формата для корпоративов и частных событий.",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }

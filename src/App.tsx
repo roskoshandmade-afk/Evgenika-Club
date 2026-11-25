@@ -94,6 +94,31 @@ export default function App() {
   );
 }
 
+// --- Image with Robust Fallback ---
+function SafeImage({ src, alt, className, title }: { src: string; alt: string; className?: string; title: string }) {
+  const [hasError, setHasError] = useState(false);
+
+  if (hasError) {
+    return (
+      <div className={`w-full h-full bg-[#FAF6F0] border border-[#6B1D2F]/20 flex flex-col items-center justify-center p-6 text-center ${className || ''}`}>
+        <Wine className="w-10 h-10 text-[#6B1D2F] mb-2 opacity-80" />
+        <span className="font-serif text-sm font-semibold text-[#1E1B18]">{title}</span>
+        <span className="text-xs text-[#1E1B18]/60 mt-1">Евгеника Club</span>
+      </div>
+    );
+  }
+
+  return (
+    <img
+      src={src}
+      alt={alt}
+      className={className}
+      referrerPolicy="no-referrer"
+      onError={() => setHasError(true)}
+    />
+  );
+}
+
 // --- Sticky Header ---
 function StickyHeader({ currentHash, onNavigate }: { currentHash: string; onNavigate: (hash: string) => void }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -279,13 +304,13 @@ function HomePage({ onNavigate }: { onNavigate: (hash: string) => void }) {
 
         <div className="lg:col-span-5 relative">
           <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-[#6B1D2F]/15 bg-white aspect-[4/3] group">
-            <img
-              src="/src/assets/images/hero_wine_tasting_1795611296364.jpg"
-              alt="Евгеника Club винное казино и дегустация"
+            <SafeImage
+              src="/src/assets/images/hero_candid_wine_gathering_1795613860686.jpg"
+              alt="Теплая дружеская встреча с вином в Евгеника Club"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-              referrerPolicy="no-referrer"
+              title="Евгеника Club — Атмосфера вечера"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-6">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-6 pointer-events-none">
               <span className="text-[#FAF6F0] text-sm font-medium tracking-wide">
                 Игры, объединяющие искушенных ценителей и новичков
               </span>
@@ -330,7 +355,7 @@ function HomePage({ onNavigate }: { onNavigate: (hash: string) => void }) {
         </div>
       </section>
 
-      {/* 3. Formats Overview Grid (6 cards with distinct imagery) */}
+      {/* 3. Formats Overview Grid (6 cards with distinct candid imagery) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-8 w-full flex flex-col gap-12">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="max-w-xl">
@@ -353,42 +378,42 @@ function HomePage({ onNavigate }: { onNavigate: (hash: string) => void }) {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <FormatOverviewCard
-            image="/src/assets/images/format_wine_casino_1795611296475.jpg"
+            image="/src/assets/images/candid_wine_casino_1795613859914.jpg"
             title="Винное казино"
             tag="Хит мероприятий"
             desc="Азартная игра на зеленом сукне: ставки на сорта вин, регионы и крепость по слепым дегустационным бокалам."
             onSelect={() => onNavigate('#/formats')}
           />
           <FormatOverviewCard
-            image="/src/assets/images/format_wine_quiz_1795611298215.jpg"
+            image="/src/assets/images/candid_wine_quiz_1795613859986.jpg"
             title="Винный квиз"
             tag="Интеллектуальное шоу"
             desc="Увлекательное командное состязание на эрудицию, логику и обоняние с мультимедийными вопросами."
             onSelect={() => onNavigate('#/formats')}
           />
           <FormatOverviewCard
-            image="/src/assets/images/format_blind_tasting_1795611297281.jpg"
+            image="/src/assets/images/candid_blind_tasting_1795613860333.jpg"
             title="Слепая дегустация"
             tag="Классика сомелье"
             desc="Углубленное погружение в органолептику: угадываем год урожая, терруар и скрытые ноты в закрытых бокалах."
             onSelect={() => onNavigate('#/formats')}
           />
           <FormatOverviewCard
-            image="/src/assets/images/format_sommelier_service_1795611296473.jpg"
+            image="/src/assets/images/candid_wine_mafia_1795613860238.jpg"
             title="Винная мафия"
             tag="Детективный интерактив"
             desc="Классическая психологическая игра в новом амплуа: среди мирных виноделов скрывается коварный сомелье-вредитель."
             onSelect={() => onNavigate('#/formats')}
           />
           <FormatOverviewCard
-            image="/src/assets/images/hero_wine_tasting_1795611296364.jpg"
+            image="/src/assets/images/hero_candid_wine_gathering_1795613860686.jpg"
             title="Винная церемония и сабраж"
             tag="Шоу-элемент"
             desc="Зрелищное открытие бутылки игристого саблей под рассказ об истории благородных шампанских домов."
             onSelect={() => onNavigate('#/formats')}
           />
           <FormatOverviewCard
-            image="/src/assets/images/format_sommelier_service_1795611296473.jpg"
+            image="/src/assets/images/candid_sommelier_service_1795613861514.jpg"
             title="Выездной сомелье на фуршет"
             tag="Премиум сервис"
             desc="Элегантное сопровождение welcome-зоны: профессиональная подача, увлекательные истории о винах и общение с гостями."
@@ -421,11 +446,11 @@ function FormatOverviewCard({ image, title, tag, desc, onSelect }: { image: stri
   return (
     <div className="group rounded-2xl bg-white border border-[#6B1D2F]/15 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col">
       <div className="aspect-[4/3] overflow-hidden relative">
-        <img
+        <SafeImage
           src={image}
           alt={title}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-          referrerPolicy="no-referrer"
+          title={title}
         />
         <div className="absolute top-4 left-4 bg-[#6B1D2F] text-[#FAF6F0] text-xs font-semibold px-3 py-1 rounded-full shadow-sm">
           {tag}
@@ -449,7 +474,7 @@ function FormatOverviewCard({ image, title, tag, desc, onSelect }: { image: stri
 }
 
 // --- Interactive Calculator Component (using EventDraft and buildBookingMessage) ---
-const STORAGE_KEY = 'eugenica_calc_brief_v3';
+const STORAGE_KEY = 'eugenica_calc_brief_v4';
 
 function CalculatorWidget() {
   const [draft, setDraft] = useState<EventDraft>(() => {
@@ -636,10 +661,10 @@ function FormatsPage({ onNavigate }: { onNavigate: (hash: string) => void }) {
         </p>
       </section>
 
-      {/* Detailed Formats Breakdown (6 formats matching the grid) */}
+      {/* Detailed Formats Breakdown (6 formats matching the grid with candid imagery) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-8 w-full flex flex-col gap-20">
         <FormatDetailRow
-          image="/src/assets/images/format_wine_casino_1795611296475.jpg"
+          image="/src/assets/images/candid_wine_casino_1795613859914.jpg"
           badge="Хит вечера"
           title="1. Винное казино"
           subtitle="Азарт классической рулетки в сочетании с благородными ароматами"
@@ -654,7 +679,7 @@ function FormatsPage({ onNavigate }: { onNavigate: (hash: string) => void }) {
         />
 
         <FormatDetailRow
-          image="/src/assets/images/format_wine_quiz_1795611298215.jpg"
+          image="/src/assets/images/candid_wine_quiz_1795613859986.jpg"
           badge="Интеллектуальное шоу"
           title="2. Винный квиз"
           subtitle="Интерактивное командное состязание на эрудицию, логику и обоняние"
@@ -670,7 +695,7 @@ function FormatsPage({ onNavigate }: { onNavigate: (hash: string) => void }) {
         />
 
         <FormatDetailRow
-          image="/src/assets/images/format_blind_tasting_1795611297281.jpg"
+          image="/src/assets/images/candid_blind_tasting_1795613860333.jpg"
           badge="Классика сомелье"
           title="3. Слепая дегустация"
           subtitle="Глубокое погружение в органолептику редких вин и терруаров"
@@ -685,7 +710,7 @@ function FormatsPage({ onNavigate }: { onNavigate: (hash: string) => void }) {
         />
 
         <FormatDetailRow
-          image="/src/assets/images/format_sommelier_service_1795611296473.jpg"
+          image="/src/assets/images/candid_wine_mafia_1795613860238.jpg"
           badge="Детективный интерактив"
           title="4. Винная мафия"
           subtitle="Психологическая игра в новом благородном формате"
@@ -701,7 +726,7 @@ function FormatsPage({ onNavigate }: { onNavigate: (hash: string) => void }) {
         />
 
         <FormatDetailRow
-          image="/src/assets/images/hero_wine_tasting_1795611296364.jpg"
+          image="/src/assets/images/hero_candid_wine_gathering_1795613860686.jpg"
           badge="Шоу-элемент"
           title="5. Винная церемония и сабраж"
           subtitle="Эффектное открытие бутылки игристого саблей"
@@ -716,10 +741,10 @@ function FormatsPage({ onNavigate }: { onNavigate: (hash: string) => void }) {
         />
 
         <FormatDetailRow
-          image="/src/assets/images/format_sommelier_service_1795611296473.jpg"
+          image="/src/assets/images/candid_sommelier_service_1795613861514.jpg"
           badge="Премиум сервис"
           title="6. Выездной сомелье на фуршет"
-          subtitle="Изысканное винное сопровождение вашого welcome-мероприятия"
+          subtitle="Изысканное винное сопровождение вашего welcome-мероприятия"
           rules={[
             'Профессиональная подача вин на открытии мероприятия или фуршете.',
             'Сомелье знакомит гостей с историей напитков и помогает с выбором сочетаний.',
@@ -826,11 +851,11 @@ function FormatDetailRow({
     <div className={`grid grid-cols-1 lg:grid-cols-12 gap-10 items-center ${reverse ? 'lg:flex-row-reverse' : ''}`}>
       <div className={`lg:col-span-6 ${reverse ? 'lg:order-2' : ''}`}>
         <div className="relative rounded-2xl overflow-hidden shadow-xl border border-[#6B1D2F]/15 aspect-[4/3] group">
-          <img
+          <SafeImage
             src={image}
             alt={title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-            referrerPolicy="no-referrer"
+            title={title}
           />
           <div className="absolute top-4 left-4 bg-[#6B1D2F] text-[#FAF6F0] text-xs font-semibold px-3 py-1 rounded-full shadow-sm">
             {badge}
