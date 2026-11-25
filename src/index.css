@@ -15,6 +15,12 @@
   
   body {
     background-color: var(--bg-ivory);
+    background-image: 
+      radial-gradient(circle at 10% 20%, rgba(107, 29, 47, 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 90% 80%, rgba(184, 146, 90, 0.18) 0%, transparent 60%),
+      radial-gradient(circle at 50% 50%, rgba(107, 29, 47, 0.10) 0%, transparent 75%),
+      url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 0 L80 40 L40 80 L0 40 Z' fill='none' stroke='%236B1D2F' stroke-width='1.2' stroke-opacity='0.12'/%3E%3Ccircle cx='40' cy='40' r='12' fill='%23B8925A' fill-opacity='0.15'/%3E%3C/svg%3E");
+    background-attachment: fixed;
     color: var(--charcoal-text);
     font-family: 'Plus Jakarta Sans', sans-serif;
   }
@@ -28,4 +34,14 @@
 ::selection {
   background-color: #6B1D2F;
   color: #FAF6F0;
+}
+
+.wine-club-canvas {
+  background-color: #FAF6F0;
+  background-image: 
+    linear-gradient(to bottom, rgba(250, 246, 240, 0.93), rgba(250, 246, 240, 0.95)),
+    url('/src/assets/images/hero_candid_wine_gathering_1795613860686.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }

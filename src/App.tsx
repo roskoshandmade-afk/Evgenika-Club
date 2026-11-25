@@ -102,7 +102,7 @@ export default function App() {
   const isFormatsPage = currentHash.startsWith('#/formats');
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#FAF6F0] text-[#1E1B18] antialiased selection:bg-[#6B1D2F] selection:text-[#FAF6F0]">
+    <div className="min-h-screen flex flex-col wine-club-canvas text-[#1E1B18] antialiased selection:bg-[#6B1D2F] selection:text-[#FAF6F0]">
       <StickyHeader currentHash={currentHash} onNavigate={navigateTo} onOpenProposal={() => openProposal(proposalDraft)} />
       
       <main className="flex-grow">
@@ -330,10 +330,10 @@ function HomePage({
         <div className="lg:col-span-7 flex flex-col gap-6">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#B8925A]/15 text-[#6B1D2F] text-xs font-semibold tracking-wide w-fit border border-[#B8925A]/30">
             <Sparkles className="w-3.5 h-3.5 text-[#B8925A]" />
-            <span>Премиальный выездной винный клуб</span>
+            <span>Эксклюзивный выездной винный клуб</span>
           </div>
           <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#1E1B18] leading-[1.15]">
-            Винное казино, дегустации и винные игры благородного формата
+            Винное казино, дегустации и винные игры эксклюзивного формата
           </h1>
           <p className="text-base sm:text-lg text-[#1E1B18]/85 max-w-2xl leading-relaxed font-normal">
             Не нужно разбираться в вине — всё проходит легко, азартно и со вкусом. Профессиональный сомелье, роскошный реквизит и незабываемая атмосфера для вашего события.
@@ -355,7 +355,7 @@ function HomePage({
           </div>
           <div className="grid grid-cols-3 gap-6 pt-6 border-t border-[#6B1D2F]/15 text-xs sm:text-sm text-[#1E1B18]/70">
             <div>
-              <span className="block font-serif text-xl sm:text-2xl font-bold text-[#6B1D2F]">500+</span>
+              <span className="block font-serif text-xl sm:text-2xl font-bold text-[#6B1D2F]">100+</span>
               <span>Проведенных игр</span>
             </div>
             <div>
@@ -598,7 +598,7 @@ function CalculatorWidget({ onOpenProposal }: { onOpenProposal: (draft: EventDra
           <select
             value={draft.format}
             onChange={(e) => setDraft({ ...draft, format: e.target.value })}
-            className="w-full px-4 py-3 rounded-xl border border-[#6B1D2F]/25 bg-[#E9DFD0] text-[#1E1B18] font-medium focus:outline-none focus:border-[#6B1D2F]"
+            className="w-full px-4 py-3 rounded-xl border border-[#6B1D2F]/25 bg-[#ECE2D3] text-[#1E1B18] font-medium focus:outline-none focus:border-[#6B1D2F]"
           >
             <option value="Винное казино (Хит)">Винное казино (Хит)</option>
             <option value="Винный квиз">Винный квиз (Интеллектуальная игра)</option>
@@ -617,7 +617,7 @@ function CalculatorWidget({ onOpenProposal }: { onOpenProposal: (draft: EventDra
           <select
             value={draft.occasion}
             onChange={(e) => setDraft({ ...draft, occasion: e.target.value })}
-            className="w-full px-4 py-3 rounded-xl border border-[#6B1D2F]/25 bg-[#E9DFD0] text-[#1E1B18] font-medium focus:outline-none focus:border-[#6B1D2F]"
+            className="w-full px-4 py-3 rounded-xl border border-[#6B1D2F]/25 bg-[#ECE2D3] text-[#1E1B18] font-medium focus:outline-none focus:border-[#6B1D2F]"
           >
             <option value="Корпоратив / Тимбилдинг">Корпоратив / Тимбилдинг</option>
             <option value="День рождения / Юбилей">День рождения / Юбилей</option>
@@ -635,7 +635,7 @@ function CalculatorWidget({ onOpenProposal }: { onOpenProposal: (draft: EventDra
           <select
             value={draft.guests}
             onChange={(e) => setDraft({ ...draft, guests: e.target.value })}
-            className="w-full px-4 py-3 rounded-xl border border-[#6B1D2F]/25 bg-[#E9DFD0] text-[#1E1B18] font-medium focus:outline-none focus:border-[#6B1D2F]"
+            className="w-full px-4 py-3 rounded-xl border border-[#6B1D2F]/25 bg-[#ECE2D3] text-[#1E1B18] font-medium focus:outline-none focus:border-[#6B1D2F]"
           >
             <option value="6–10 гостей (камерный формат)">6–10 гостей (камерный формат)</option>
             <option value="10–20 гостей (оптимально)">10–20 гостей (оптимально)</option>
@@ -654,7 +654,7 @@ function CalculatorWidget({ onOpenProposal }: { onOpenProposal: (draft: EventDra
               type="date"
               value={draft.date}
               onChange={(e) => setDraft({ ...draft, date: e.target.value })}
-              className="w-full px-4 py-3 rounded-xl border border-[#6B1D2F]/25 bg-[#E9DFD0] text-[#1E1B18] font-medium focus:outline-none focus:border-[#6B1D2F]"
+              className="w-full px-4 py-3 rounded-xl border border-[#6B1D2F]/25 bg-[#ECE2D3] text-[#1E1B18] font-medium focus:outline-none focus:border-[#6B1D2F]"
             />
           </div>
           <div className="flex flex-col gap-2">
@@ -666,7 +666,7 @@ function CalculatorWidget({ onOpenProposal }: { onOpenProposal: (draft: EventDra
               value={draft.location}
               onChange={(e) => setDraft({ ...draft, location: e.target.value })}
               placeholder="Крым / Ваш город или площадка"
-              className="w-full px-4 py-3 rounded-xl border border-[#6B1D2F]/25 bg-[#E9DFD0] text-[#1E1B18] font-medium focus:outline-none focus:border-[#6B1D2F]"
+              className="w-full px-4 py-3 rounded-xl border border-[#6B1D2F]/25 bg-[#ECE2D3] text-[#1E1B18] font-medium focus:outline-none focus:border-[#6B1D2F]"
             />
           </div>
         </div>
@@ -684,7 +684,7 @@ function CalculatorWidget({ onOpenProposal }: { onOpenProposal: (draft: EventDra
             <span>Открыть коммерческое предложение (КП)</span>
           </button>
         </div>
-        <div className="bg-[#FAF6F0] rounded-xl p-4 border border-[#6B1D2F]/15 font-mono text-xs sm:text-sm text-[#1E1B18] whitespace-pre-wrap leading-relaxed">
+        <div className="bg-[#ECE2D3] rounded-xl p-4 border border-[#6B1D2F]/15 font-mono text-xs sm:text-sm text-[#1E1B18] whitespace-pre-wrap leading-relaxed">
           {summaryText}
         </div>
         <div className="flex flex-wrap items-center gap-4 pt-2">
@@ -834,7 +834,7 @@ function ProposalModal({ draft, onClose }: { draft: EventDraft; onClose: () => v
 
         {/* Footer & Compliance Notice */}
         <div className="border-t border-[#6B1D2F]/20 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#1E1B18]/60 text-center sm:text-left">
-          <p>18+. Мероприятия предназначены для совершеннолетних. Дистанционная продажа алкоголя не осуществляется.</p>
+          <p>18+. Услуги оказываются самозанятым специалистом (плательщиком НПД). Дистанционная продажа алкоголя не ведется. Предварительный расчет не является публичной офертой.</p>
           <div className="flex items-center gap-3 print:hidden">
             <button
               onClick={handlePrint}
@@ -1182,9 +1182,9 @@ function Footer() {
         </div>
 
         <div className="border-t border-[#B8925A]/20 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#FAF6F0]/60">
-          <p>© {new Date().getFullYear()} Evgenika Club. Все права защищены.</p>
+          <p>© {new Date().getFullYear()} Evgenika Club. Все права защищены. Самозанятый (НПД).</p>
           <p className="text-center sm:text-right max-w-xl">
-            18+. Мероприятия предназначены для совершеннолетних. Мы не осуществляем дистанционную продажу алкоголя — оказываются исключительно услуги проведения дегустаций и винных игр.
+            18+. Услуги проведения винных игр и дегустаций оказываются самозанятым специалистом (плательщиком НПД). Дистанционная продажа алкоголя не осуществляется. Предварительные расчеты не являются публичной офертой.
           </p>
         </div>
       </div>
