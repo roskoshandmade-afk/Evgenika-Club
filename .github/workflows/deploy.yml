@@ -47,3 +47,16 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        continue-on-error: true
+
+      - name: Retry Deploy to GitHub Pages on transient 5xx error
+        if: steps.deployment.outcome == 'failure'
+        run: |
+          for attempt in 1 2 3; do
+            echo "Retry attempt $attempt after 10s..."
+            sleep 10
+            gh workflow run deploy.yml --ref main && exit 0 || true
+          done
+          exit 1
+        env:
+          GH_TOKEN: ${{ github.token }}
