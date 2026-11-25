@@ -78,6 +78,28 @@ export default function App() {
   const [currentHash, setCurrentHash] = useState<string>(window.location.hash || '#/');
   const [proposalModalOpen, setProposalModalOpen] = useState(false);
   const [proposalDraft, setProposalDraft] = useState<EventDraft>(DEFAULT_DRAFT);
+  const [ageVerified, setAgeVerified] = useState<boolean>(() => {
+    try {
+      return localStorage.getItem('eugenica_age_verified_v1') === 'true';
+    } catch {
+      return false;
+    }
+  });
+  const [under18Blocked, setUnder18Blocked] = useState(false);
+
+  const handleVerifyAge = () => {
+    try {
+      localStorage.setItem('eugenica_age_verified_v1', 'true');
+    } catch {
+      // ignore
+    }
+    setAgeVerified(true);
+    setUnder18Blocked(false);
+  };
+
+  const handleUnder18 = () => {
+    setUnder18Blocked(true);
+  };
 
   // Listen to hash changes for hash routing
   useEffect(() => {
@@ -103,6 +125,9 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col wine-club-canvas text-[#1E1B18] antialiased selection:bg-[#6B1D2F] selection:text-[#FAF6F0]">
+      {!ageVerified && <AgeVerificationModal onVerify={handleVerifyAge} onUnder18={handleUnder18} />}
+      {under18Blocked && <Under18Modal onBack={() => setUnder18Blocked(false)} />}
+
       <StickyHeader currentHash={currentHash} onNavigate={navigateTo} onOpenProposal={() => openProposal(proposalDraft)} />
       
       <main className="flex-grow">
@@ -114,6 +139,62 @@ export default function App() {
       {proposalModalOpen && (
         <ProposalModal draft={proposalDraft} onClose={() => setProposalModalOpen(false)} />
       )}
+    </div>
+  );
+}
+
+// --- Age Verification Modals ---
+function AgeVerificationModal({ onVerify, onUnder18 }: { onVerify: () => void; onUnder18: () => void }) {
+  return (
+    <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 animate-fadeIn">
+      <div className="bg-[#FAF6F0] rounded-3xl border-2 border-[#B8925A]/40 max-w-md w-full p-8 shadow-2xl flex flex-col gap-6 text-center relative overflow-hidden">
+        <div className="w-16 h-16 rounded-full bg-[#6B1D2F]/10 border border-[#6B1D2F]/20 flex items-center justify-center mx-auto text-[#6B1D2F]">
+          <Wine className="w-8 h-8" />
+        </div>
+        <div className="flex flex-col gap-2">
+          <span className="text-xs uppercase tracking-widest text-[#B8925A] font-bold">Контроль возраста 18+</span>
+          <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#1E1B18]">Вам уже исполнилось 18 лет?</h2>
+          <p className="text-xs sm:text-sm text-[#1E1B18]/75 leading-relaxed mt-1">
+            Материалы сайта содержат информацию о дегустациях, винных играх и мероприятиях для совершеннолетних. Дистанционная продажа алкоголя не ведется.
+          </p>
+        </div>
+        <div className="flex flex-col sm:flex-row gap-3 pt-2">
+          <button
+            onClick={onVerify}
+            className="flex-1 py-3.5 px-6 rounded-xl bg-[#6B1D2F] text-[#FAF6F0] text-sm font-semibold hover:bg-[#4A1220] transition-all shadow-md active:scale-95"
+          >
+            Да, мне есть 18 лет
+          </button>
+          <button
+            onClick={onUnder18}
+            className="flex-1 py-3.5 px-6 rounded-xl border border-[#6B1D2F]/30 text-[#6B1D2F] text-sm font-semibold hover:bg-[#6B1D2F]/5 transition-colors bg-[#F3ECE1]"
+          >
+            Мне меньше 18 лет
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Under18Modal({ onBack }: { onBack: () => void }) {
+  return (
+    <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 animate-fadeIn">
+      <div className="bg-[#FAF6F0] rounded-3xl border border-[#6B1D2F]/30 max-w-md w-full p-8 shadow-2xl flex flex-col gap-6 text-center">
+        <div className="w-14 h-14 rounded-full bg-[#6B1D2F]/10 flex items-center justify-center mx-auto text-[#6B1D2F]">
+          <ShieldCheck className="w-7 h-7" />
+        </div>
+        <h2 className="font-serif text-2xl font-bold text-[#1E1B18]">Доступ ограничен</h2>
+        <p className="text-sm text-[#1E1B18]/80 leading-relaxed">
+          В соответствии с законодательством РФ, материалы данного сайта предназначены исключительно для лиц старше 18 лет.
+        </p>
+        <button
+          onClick={onBack}
+          className="py-3 px-6 rounded-xl bg-[#6B1D2F] text-[#FAF6F0] text-sm font-semibold hover:bg-[#4A1220] transition-colors"
+        >
+          Вернуться и подтвердить возраст
+        </button>
+      </div>
     </div>
   );
 }
