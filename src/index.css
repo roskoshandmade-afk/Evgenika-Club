@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-ivory: #FAF6F0;
+    --burgundy-primary: #6B1D2F;
+    --burgundy-dark: #4A1220;
+    --gold-accent: #B8925A;
+    --gold-light: #D4AF37;
+    --charcoal-text: #1E1B18;
+  }
+  
+  body {
+    background-color: var(--bg-ivory);
+    color: var(--charcoal-text);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  h1, h2, h3, h4, .font-serif {
+    font-family: 'Playfair Display', serif;
+  }
+}
+
+/* Custom smooth scroll and boutique styling */
+::selection {
+  background-color: #6B1D2F;
+  color: #FAF6F0;
+}
