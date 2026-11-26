@@ -746,7 +746,7 @@ function CalculatorWidget({ onOpenProposal }: { onOpenProposal: (draft: EventDra
               type="text"
               value={draft.location}
               onChange={(e) => setDraft({ ...draft, location: e.target.value })}
-              placeholder="Крым / Ваш город или площадка"
+              placeholder="Симферополь, Севастополь, Ялта / МСК / СПб / НН"
               className="w-full px-4 py-3 rounded-xl border border-[#6B1D2F]/25 bg-[#ECE2D3] text-[#1E1B18] font-medium focus:outline-none focus:border-[#6B1D2F]"
             />
           </div>
@@ -865,7 +865,7 @@ function ProposalModal({ draft, onClose }: { draft: EventDraft; onClose: () => v
               <div>
                 <span className="text-[#1E1B18]/60 block text-xs uppercase tracking-wider">Дата и локация</span>
                 <strong className="text-[#1E1B18]">
-                  {draft.date ? draft.date : 'уточняется'} / {draft.location.trim() || 'Крым / Ваш город'}
+                  {draft.date ? draft.date : 'уточняется'} / {draft.location.trim() || 'Республика Крым / МСК / СПб'}
                 </strong>
               </div>
             </div>
@@ -1104,7 +1104,7 @@ function FormatsPage({ onNavigate }: { onNavigate: (hash: string) => void }) {
           />
           <FaqItem
             question="Где могут проходить мероприятия?"
-            answer="Мы работаем на любой площадке: в ресторанах, офисах, лофтах, загородных домах, на винодельнях Крыма или в любом другом городе. Наше выездное оборудование автономно и компактно размещается на любых столах."
+            answer="Мы проводим мероприятия в Республике Крым (Симферополь, Севастополь, Ялта), а также возможно проведение в МСК, СПб и Нижнем Новгороде. События могут проходить в ресторанах, офисах, лофтах или на винодельнях."
           />
           <FaqItem
             question="Сколько по времени длится программа?"
@@ -1255,7 +1255,7 @@ function Footer() {
 
           <div className="md:col-span-3 flex flex-col gap-3">
             <span className="text-xs uppercase tracking-widest text-[#D4B07A] font-semibold">Контакты и бронь</span>
-            <span className="text-sm text-[#FAF6F0]/80">Крым, Москва, СПб и другие города</span>
+            <span className="text-sm text-[#FAF6F0]/80">Республика Крым, Симферополь, Севастополь, Ялта, возможно проведение в МСК, СПб и Нижнем Новгороде</span>
             <a href={CONTACT_TELEGRAM} target="_blank" rel="noopener noreferrer" className="text-sm text-[#D4B07A] hover:underline font-medium">
               Telegram / Мессенджеры
             </a>
