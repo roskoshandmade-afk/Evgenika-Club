@@ -219,10 +219,12 @@ function SafeImage({ src, alt, className, title, priority = false }: { src: stri
     <img
       src={src}
       alt={alt}
-      className={className}
+      className={`w-full h-full object-cover ${className || ''}`}
       loading={priority ? 'eager' : 'lazy'}
       fetchPriority={priority ? 'high' : 'auto'}
       decoding="async"
+      width={priority ? 1200 : 600}
+      height={priority ? 900 : 450}
       referrerPolicy="no-referrer"
       onError={() => setHasError(true)}
     />
