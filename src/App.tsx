@@ -153,7 +153,7 @@ function AgeVerificationModal({ onVerify, onUnder18 }: { onVerify: () => void; o
         </div>
         <div className="flex flex-col gap-2">
           <span className="text-xs uppercase tracking-widest text-[#B8925A] font-bold">Контроль возраста 18+</span>
-          <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#1E1B18]">Вам уже исполнилось 18 лет?</h2>
+          <p className="font-serif text-2xl sm:text-3xl font-bold text-[#1E1B18]">Вам уже исполнилось 18 лет?</p>
           <p className="text-xs sm:text-sm text-[#1E1B18]/75 leading-relaxed mt-1">
             Материалы сайта содержат информацию о дегустациях, винных играх и мероприятиях для совершеннолетних. Дистанционная продажа алкоголя не ведется.
           </p>
@@ -184,7 +184,7 @@ function Under18Modal({ onBack }: { onBack: () => void }) {
         <div className="w-14 h-14 rounded-full bg-[#6B1D2F]/10 flex items-center justify-center mx-auto text-[#6B1D2F]">
           <ShieldCheck className="w-7 h-7" />
         </div>
-        <h2 className="font-serif text-2xl font-bold text-[#1E1B18]">Доступ ограничен</h2>
+        <p className="font-serif text-2xl font-bold text-[#1E1B18]">Доступ ограничен</p>
         <p className="text-sm text-[#1E1B18]/80 leading-relaxed">
           В соответствии с законодательством РФ, материалы данного сайта предназначены исключительно для лиц старше 18 лет.
         </p>
@@ -200,7 +200,7 @@ function Under18Modal({ onBack }: { onBack: () => void }) {
 }
 
 // --- Image with Soft Parchment Fallback (Zero Broken Images, Zero Pure White) ---
-function SafeImage({ src, alt, className, title }: { src: string; alt: string; className?: string; title: string }) {
+function SafeImage({ src, alt, className, title, priority = false }: { src: string; alt: string; className?: string; title: string; priority?: boolean }) {
   const [hasError, setHasError] = useState(false);
 
   if (hasError) {
@@ -220,6 +220,9 @@ function SafeImage({ src, alt, className, title }: { src: string; alt: string; c
       src={src}
       alt={alt}
       className={className}
+      loading={priority ? 'eager' : 'lazy'}
+      fetchPriority={priority ? 'high' : 'auto'}
+      decoding="async"
       referrerPolicy="no-referrer"
       onError={() => setHasError(true)}
     />
@@ -265,6 +268,7 @@ function StickyHeader({
               alt="Evgenika Club Logo"
               className="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform"
               title="Evgenika Club"
+              priority={true}
             />
           </div>
           <div>
@@ -300,13 +304,8 @@ function StickyHeader({
           <a
             href="#faq"
             onClick={(e) => {
-              if (window.location.hash !== '#/formats') {
-                e.preventDefault();
-                onNavigate('#/formats');
-                setTimeout(() => {
-                  document.getElementById('faq')?.scrollIntoView({ behavior: 'smooth' });
-                }, 100);
-              }
+              e.preventDefault();
+              document.getElementById('faq')?.scrollIntoView({ behavior: 'smooth' });
             }}
             className="hover:text-[#6B1D2F] transition-colors"
           >
@@ -365,10 +364,7 @@ function StickyHeader({
           <button
             onClick={() => {
               setMobileMenuOpen(false);
-              onNavigate('#/formats');
-              setTimeout(() => {
-                document.getElementById('faq')?.scrollIntoView({ behavior: 'smooth' });
-              }, 100);
+              document.getElementById('faq')?.scrollIntoView({ behavior: 'smooth' });
             }}
             className="text-left text-base font-medium py-2 text-[#1E1B18]"
           >
@@ -414,7 +410,7 @@ function HomePage({
             <span>Эксклюзивный выездной винный клуб</span>
           </div>
           <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#1E1B18] leading-[1.15]">
-            Винное казино, дегустации и винные игры эксклюзивного формата
+            Винное казино, дегустации и винные игры на мероприятие
           </h1>
           <p className="text-base sm:text-lg text-[#1E1B18]/85 max-w-2xl leading-relaxed font-normal">
             Не нужно разбираться в вине — всё проходит легко, азартно и со вкусом. Профессиональный сомелье, роскошный реквизит и незабываемая атмосфера для вашего события.
@@ -457,6 +453,7 @@ function HomePage({
               alt="Теплая дружеская встреча с вином в Evgenika Club"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               title="Evgenika Club — Атмосфера вечера"
+              priority={true}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-6 pointer-events-none">
               <span className="text-[#FAF6F0] text-sm font-medium tracking-wide">
@@ -467,12 +464,14 @@ function HomePage({
         </div>
       </section>
 
-      {/* 2. Occasions Strip ("Под любой ваш повод") in Merlot-Espresso (#221418) */}
+      {/* 2. Occasions Strip in Merlot-Espresso (#221418) */}
       <section className="bg-[#221418] text-[#FAF6F0] py-16 px-4 sm:px-8 border-y border-[#B8925A]/20">
         <div className="max-w-7xl mx-auto flex flex-col gap-10">
-          <div className="text-center max-w-2xl mx-auto">
+          <div className="text-center max-w-3xl mx-auto">
             <span className="text-xs uppercase tracking-widest text-[#D4B07A] font-semibold">Индивидуальный сценарий</span>
-            <h2 className="font-serif text-2xl sm:text-4xl font-bold mt-2 text-[#FAF6F0]">Под любой ваш повод</h2>
+            <h2 className="font-serif text-2xl sm:text-4xl font-bold mt-2 text-[#FAF6F0]">
+              Поводы для проведения: корпоратив, день рождения, девичник и камерный вечер
+            </h2>
             <p className="text-sm sm:text-base text-[#FAF6F0]/80 mt-2">
               Адаптируем интерактив под масштаб и атмосферу вашего мероприятия.
             </p>
@@ -506,10 +505,10 @@ function HomePage({
       {/* 3. Formats Overview Grid (6 distinct cards on soft parchment #F3ECE1) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-8 w-full flex flex-col gap-12">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div className="max-w-xl">
+          <div className="max-w-2xl">
             <span className="text-xs uppercase tracking-widest text-[#B8925A] font-semibold">Наши программы</span>
             <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#1E1B18] mt-2">
-              Форматы дегустаций и винных игр
+              Форматы вечеров: винное казино, квиз, слепая дегустация и мафия
             </h2>
             <p className="text-sm sm:text-base text-[#1E1B18]/70 mt-2">
               Каждый формат продуман до мелочей: от реквизита до работы сомелье-крупье.
@@ -517,7 +516,7 @@ function HomePage({
           </div>
           <button
             onClick={() => onNavigate('#/formats')}
-            className="inline-flex items-center gap-2 text-sm font-semibold text-[#6B1D2F] hover:text-[#4A1220] transition-colors group"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-[#6B1D2F] hover:text-[#4A1220] transition-colors group shrink-0"
           >
             <span>Все подробности и правила игр</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -541,7 +540,7 @@ function HomePage({
           />
           <FormatOverviewCard
             image={CARD_BLIND_TASTING_SRC}
-            title="Слепая дегустация"
+            title="Слепая дегустация вин"
             tag="Классика сомелье"
             desc="Углубленное погружение в органолептику: угадываем год урожая, терруар и скрытые ноты в закрытых бокалах."
             onSelect={() => onNavigate('#/formats')}
@@ -562,9 +561,9 @@ function HomePage({
           />
           <FormatOverviewCard
             image={CARD_SOMMELIER_BUFFET_SRC}
-            title="Выездной сомелье на фуршет"
+            title="Выездной сомелье на фуршет и ужин"
             tag="Премиум сервис"
-            desc="Элегантное сопровождение welcome-зоны: профессиональная подача, увлекательные истории о винах и общение с гостями."
+            desc="Элегантное сопровождение welcome-зоны и ужина: профессиональная подача, увлекательные истории о винах и общение с гостями."
             onSelect={() => onNavigate('#/formats')}
           />
         </div>
@@ -574,6 +573,12 @@ function HomePage({
       <section id="calculator-section" className="max-w-5xl mx-auto px-4 sm:px-8 w-full">
         <CalculatorWidget onOpenProposal={onOpenProposal} />
       </section>
+
+      {/* 5. How the Evening Goes & What Is Included */}
+      <ProgramIncludedSection />
+
+      {/* 6. SEO FAQ Section */}
+      <FaqSection />
     </div>
   );
 }
@@ -652,7 +657,28 @@ function CalculatorWidget({ onOpenProposal }: { onOpenProposal: (draft: EventDra
   const handleCopy = () => {
     navigator.clipboard.writeText(summaryText);
     setCopied(true);
+    try {
+      (window as any).ym?.(114710250, 'reachGoal', 'LEAD_COPY');
+    } catch {
+      // ignore
+    }
     setTimeout(() => setCopied(false), 2500);
+  };
+
+  const trackTelegram = () => {
+    try {
+      (window as any).ym?.(114710250, 'reachGoal', 'LEAD_TELEGRAM');
+    } catch {
+      // ignore
+    }
+  };
+
+  const trackMax = () => {
+    try {
+      (window as any).ym?.(114710250, 'reachGoal', 'LEAD_MAX');
+    } catch {
+      // ignore
+    }
   };
 
   const telegramUrl = `${CONTACT_TELEGRAM}?text=${encodeURIComponent(summaryText)}`;
@@ -663,7 +689,7 @@ function CalculatorWidget({ onOpenProposal }: { onOpenProposal: (draft: EventDra
       <div className="text-center max-w-2xl mx-auto">
         <span className="text-xs uppercase tracking-widest text-[#B8925A] font-semibold">Калькулятор вечера</span>
         <h2 className="font-serif text-2xl sm:text-4xl font-bold text-[#1E1B18] mt-2">
-          Соберите параметры вашего события
+          Калькулятор стоимости вечера и подбор формата
         </h2>
         <p className="text-sm text-[#1E1B18]/70 mt-2">
           Выберите параметры ниже — мы сформируем готовый запрос для быстрой консультации и бронирования.
@@ -778,6 +804,7 @@ function CalculatorWidget({ onOpenProposal }: { onOpenProposal: (draft: EventDra
           </button>
           <a
             href={telegramUrl}
+            onClick={trackTelegram}
             target="_blank"
             rel="noopener noreferrer"
             className="px-6 py-3 rounded-xl bg-[#0088cc] text-white text-xs sm:text-sm font-semibold hover:opacity-90 transition-opacity flex items-center gap-2"
@@ -787,6 +814,7 @@ function CalculatorWidget({ onOpenProposal }: { onOpenProposal: (draft: EventDra
           </a>
           <a
             href={maxUrl}
+            onClick={trackMax}
             target="_blank"
             rel="noopener noreferrer"
             className="px-6 py-3 rounded-xl bg-[#2C3E50] text-white text-xs sm:text-sm font-semibold hover:opacity-90 transition-opacity flex items-center gap-2"
@@ -955,6 +983,12 @@ function FormatsPage({ onNavigate }: { onNavigate: (hash: string) => void }) {
 
       {/* Detailed Formats Breakdown (6 distinct formats with distinct imagery) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-8 w-full flex flex-col gap-20">
+        <div className="text-center max-w-3xl mx-auto">
+          <h2 className="font-serif text-2xl sm:text-4xl font-bold text-[#1E1B18]">
+            Форматы вечеров: винное казино, квиз, слепая дегустация и мафия
+          </h2>
+        </div>
+
         <FormatDetailRow
           image={CARD_WINE_CASINO_SRC}
           badge="Хит вечера"
@@ -989,7 +1023,7 @@ function FormatsPage({ onNavigate }: { onNavigate: (hash: string) => void }) {
         <FormatDetailRow
           image={CARD_BLIND_TASTING_SRC}
           badge="Классика сомелье"
-          title="3. Слепая дегустация"
+          title="3. Слепая дегустация вин"
           subtitle="Глубокое погружение в органолептику редких вин и терруаров"
           rules={[
             'Знакомство с техникой дегустации: цвет, аэрация, первый и второй нос, послевкусие.',
@@ -1035,10 +1069,10 @@ function FormatsPage({ onNavigate }: { onNavigate: (hash: string) => void }) {
         <FormatDetailRow
           image={CARD_SOMMELIER_BUFFET_SRC}
           badge="Премиум сервис"
-          title="6. Выездной сомелье на фуршет"
-          subtitle="Изысканное винное сопровождение вашего welcome-мероприятия"
+          title="6. Выездной сомелье на фуршет и ужин"
+          subtitle="Изысканное винное сопровождение вашего welcome-мероприятия и ужина"
           rules={[
-            'Профессиональная подача вин на открытии мероприятия или фуршете.',
+            'Профессиональная подача вин на открытии мероприятия, фуршете или ужине.',
             'Сомелье знакомит гостей с историей напитков и помогает с выбором сочетаний.',
             'Элегантная подача, эстетика и поддержание атмосферы высокой культуры.',
             'Индивидуальный подбор ассортимента под ваш бюджет и концепцию.'
@@ -1049,74 +1083,90 @@ function FormatsPage({ onNavigate }: { onNavigate: (hash: string) => void }) {
         />
       </section>
 
-      {/* "Что входит в организацию вечера" Checklist in Merlot-Espresso (#221418) */}
-      <section className="bg-[#221418] text-[#FAF6F0] py-20 px-4 sm:px-8 my-8 border-y border-[#B8925A]/20">
-        <div className="max-w-7xl mx-auto flex flex-col gap-12">
-          <div className="text-center max-w-2xl mx-auto">
-            <span className="text-xs uppercase tracking-widest text-[#D4B07A] font-semibold">Все включено</span>
-            <h2 className="font-serif text-2xl sm:text-4xl font-bold mt-2 text-[#FAF6F0]">Что входит в организацию вечера</h2>
-            <p className="text-sm sm:text-base text-[#FAF6F0]/80 mt-2">
-              Мы берем на себя 100% забот: от премиального реквизита до работы профессионального сомелье.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <CheckItem
-              title="Премиальная винная карта"
-              desc="Отборные вина проверенных хозяйств Европы и Нового Света, гармонично подобранные под ваш формат."
-            />
-            <CheckItem
-              title="Профессиональные бокалы"
-              desc="Набор дегустационных бокалов правильной формы для каждого участника."
-            />
-            <CheckItem
-              title="Игровой реквизит и сукно"
-              desc="Брендированное игровое поле для винного казино, фишки, рулетка, слепые чехлы и бланки."
-            />
-            <CheckItem
-              title="Работа ведущего-сомелье"
-              desc="Опытный сомелье с харизмой и чувством юмора, который удержит внимание любой аудитории."
-            />
-            <CheckItem
-              title="Индивидуальный сценарий"
-              desc="Тайминг вечера, адаптированный под ваш праздник, банкет или корпоративную программу."
-            />
-            <CheckItem
-              title="Доставка и монтаж"
-              desc="Полная логистика: привезем оборудование, настроим свет и подготовим зону к началу игры."
-            />
-          </div>
-        </div>
-      </section>
+      {/* "Как проходит вечер и что входит в программу" Checklist in Merlot-Espresso (#221418) */}
+      <ProgramIncludedSection />
 
       {/* SEO-friendly FAQ Accordion */}
-      <section id="faq" className="max-w-4xl mx-auto px-4 sm:px-8 w-full flex flex-col gap-10 pt-8">
-        <div className="text-center">
-          <span className="text-xs uppercase tracking-widest text-[#B8925A] font-semibold">Ответы на вопросы</span>
-          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#1E1B18] mt-2">Часто задаваемые вопросы</h2>
-          <p className="text-sm text-[#1E1B18]/70 mt-2">Все, что нужно знать перед бронированием вашей винной игры.</p>
+      <FaqSection />
+    </div>
+  );
+}
+
+function ProgramIncludedSection() {
+  return (
+    <section className="bg-[#221418] text-[#FAF6F0] py-20 px-4 sm:px-8 border-y border-[#B8925A]/20">
+      <div className="max-w-7xl mx-auto flex flex-col gap-12">
+        <div className="text-center max-w-3xl mx-auto">
+          <span className="text-xs uppercase tracking-widest text-[#D4B07A] font-semibold">Все включено</span>
+          <h2 className="font-serif text-2xl sm:text-4xl font-bold mt-2 text-[#FAF6F0]">
+            Как проходит вечер и что входит в программу
+          </h2>
+          <p className="text-sm sm:text-base text-[#FAF6F0]/80 mt-2">
+            Мы берем на себя 100% забот: от премиального реквизита и бокалов до работы профессионального ведущего-сомелье.
+          </p>
         </div>
 
-        <div className="flex flex-col gap-4">
-          <FaqItem
-            question="Нужно ли гостям разбираться в вине?"
-            answer="Совсем нет! Наши игры и дегустации созданы специально для того, чтобы увлекать как новичков, так и искушенных ценителей. Правила объясняются за 3 минуты, а ведущий сопровождает каждый шаг интересными фактами и подсказками."
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <CheckItem
+            title="Премиальная винная карта"
+            desc="Отборные вина проверенных хозяйств Европы и Нового Света, гармонично подобранные под ваш формат."
           />
-          <FaqItem
-            question="Где могут проходить мероприятия?"
-            answer="Мы проводим мероприятия в Республике Крым (Симферополь, Севастополь, Ялта), а также возможно проведение в МСК, СПб и Нижнем Новгороде. События могут проходить в ресторанах, офисах, лофтах или на винодельнях."
+          <CheckItem
+            title="Профессиональные бокалы"
+            desc="Набор дегустационных бокалов правильной формы для каждого участника."
           />
-          <FaqItem
-            question="Сколько по времени длится программа?"
-            answer="Стандартная активная игровая программа (винное казино или квиз) длится от 1.5 до 2 часов. Время может быть гибко настроено под тайминг вашего банкета или фуршета."
+          <CheckItem
+            title="Игровой реквизит и сукно"
+            desc="Брендированное игровое поле для винного казино, фишки, рулетка, слепые чехлы и бланки."
           />
-          <FaqItem
-            question="Как забронировать дату?"
-            answer="Вы можете воспользоваться калькулятором на главной странице, скопировать готовый бриф и написать нам в Telegram или MAX, либо просто забронировать удобным способом. Мы согласуем меню, дату и зафиксируем бронь."
+          <CheckItem
+            title="Работа ведущего-сомелье"
+            desc="Опытный сомелье с харизмой и чувством юмора, который удержит внимание любой аудитории."
+          />
+          <CheckItem
+            title="Индивидуальный сценарий"
+            desc="Тайминг вечера, адаптированный под ваш праздник, банкет или корпоративную программу."
+          />
+          <CheckItem
+            title="Доставка и монтаж"
+            desc="Полная логистика: привезем оборудование, настроим свет и подготовим зону к началу игры."
           />
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
+  );
+}
+
+function FaqSection() {
+  return (
+    <section id="faq" className="max-w-4xl mx-auto px-4 sm:px-8 w-full flex flex-col gap-10 pt-4">
+      <div className="text-center">
+        <span className="text-xs uppercase tracking-widest text-[#B8925A] font-semibold">Ответы на вопросы</span>
+        <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#1E1B18] mt-2">
+          Частые вопросы о винных играх и дегустациях
+        </h2>
+        <p className="text-sm text-[#1E1B18]/70 mt-2">Все, что нужно знать перед бронированием вашей винной игры.</p>
+      </div>
+
+      <div className="flex flex-col gap-4">
+        <FaqItem
+          question="Нужно ли гостям разбираться в вине?"
+          answer="Совсем нет! Наши игры и дегустации созданы специально для того, чтобы увлекать как новичков, так и искушенных ценителей. Правила объясняются за 3 минуты, а ведущий сопровождает каждый шаг интересными фактами и подсказками."
+        />
+        <FaqItem
+          question="Где могут проходить мероприятия?"
+          answer="Мы проводим мероприятия в Республике Крым (Симферополь, Севастополь, Ялта), а также возможно проведение в МСК, СПб и Нижнем Новгороде. События могут проходить в ресторанах, офисах, лофтах или на винодельнях."
+        />
+        <FaqItem
+          question="Сколько по времени длится программа?"
+          answer="Стандартная активная игровая программа (винное казино или квиз) длится от 1.5 до 2 часов. Время может быть гибко настроено под тайминг вашего банкета или фуршета."
+        />
+        <FaqItem
+          question="Как забронировать дату?"
+          answer="Вы можете воспользоваться калькулятором на главной странице, скопировать готовый бриф и написать нам в Telegram или MAX, либо просто забронировать удобным способом. Мы согласуем меню, дату и зафиксируем бронь."
+        />
+      </div>
+    </section>
   );
 }
 
@@ -1157,7 +1207,7 @@ function FormatDetailRow({
 
       <div className={`lg:col-span-6 flex flex-col gap-6 ${reverse ? 'lg:order-1' : ''}`}>
         <div>
-          <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#1E1B18]">{title}</h2>
+          <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#1E1B18]">{title}</h3>
           <p className="text-sm sm:text-base text-[#B8925A] font-medium mt-1">{subtitle}</p>
         </div>
 
