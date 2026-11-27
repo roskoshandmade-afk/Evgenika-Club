@@ -23,12 +23,9 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Configure AWS CLI for Yandex Object Storage
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.YC_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.YC_SECRET_ACCESS_KEY }}
-          aws-region: ru-central1
-
       - name: Sync dist folder to bucket
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.YC_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.YC_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ru-central1
         run: aws s3 sync ./dist s3://evgenika-club.ru --delete --endpoint-url=https://storage.yandexcloud.net
